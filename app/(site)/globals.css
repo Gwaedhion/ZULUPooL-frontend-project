@@ -1,0 +1,25 @@
+:root {
+	--primary-purple: #8f16ff;
+	--primary-blue: #107eff;
+	--secondary-color: #cca43b;
+	--tertiary-color: #342e3a;
+	--default-color: #ffffff;
+	--text-color: #000000;
+}
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+html,
+body {
+	max-width: 100vw;
+	overflow-x: hidden;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}

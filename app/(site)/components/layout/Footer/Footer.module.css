@@ -1,0 +1,33 @@
+.footer {
+	height: 40px;
+	gap: 40px;
+	background: var(--tertiary-color);
+	color: var(--default-color);
+	font-weight: 300;
+	font-size: 14px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 50px;
+	position: absolute;
+	width: 100vw;
+	bottom: 0;
+}
+
+.footerItem {
+	display: flex;
+	gap: 4px;
+}
+
+.link {
+	background: -webkit-linear-gradient(
+		var(--primary-blue) 60%,
+		var(--primary-purple) 100%
+	);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.link:hover {
+	border-bottom: 1px solid var(--primary-blue);
+}

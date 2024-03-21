@@ -1,0 +1,46 @@
+.button {
+	color: var(--default-color);
+	transition: all 0.5s;
+	cursor: pointer;
+	border: none;
+}
+
+.small {
+	width: 50px;
+	height: 30px;
+	text-transform: uppercase;
+}
+
+.middle {
+	width: 180px;
+	height: 55px;
+	background-image: linear-gradient(
+		to left,
+		var(--primary-purple) 0%,
+		var(--primary-blue) 51%,
+		var(--primary-purple) 100%
+	);
+	background-size: 200% auto;
+	display: block;
+	font-family: var(--second-family);
+	font-weight: 400;
+	font-size: 18px;
+	box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.middle:hover {
+	background-position: right center; /* change the direction of the change here */
+}
+
+.small,
+.middle {
+	background-color: var(--tetriary-color);
+	text-align: center;
+	border-radius: 5px;
+}
+
+.big {
+	width: 185px;
+	height: 70px;
+	border-radius: 10px;
+}
