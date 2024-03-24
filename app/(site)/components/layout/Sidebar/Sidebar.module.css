@@ -1,35 +1,74 @@
 .sidebar {
 	background-color: var(--tertiary-color);
-	max-width: 300px;
-	width: 100%;
+
 	height: 100vh;
 	position: fixed;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	transition: all 0.5s ease;
 }
 
+.expanded {
+	width: 300px;
+}
+
+.collapsed {
+	width: 100px;
+}
+
+.logoWrapper {
+	margin-bottom: 25px;
+	margin-top: 25px;
+	padding-bottom: 25px;
+	border-bottom: 1px solid #241f28;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	width: 100%;
+}
+
+.expandIcon {
+	position: absolute;
+	fill: var(--tertiary-color);
+	top: -25px;
+}
+
+.sidebarBtn {
+	border: none;
+	background: none;
+	cursor: pointer;
+	position: absolute;
+	right: 0;
+}
+
+.sidebarBtn:hover .collapseIcon,
+.sidebarBtn:hover .expandIcon {
+	fill: var(--primary-blue);
+}
+
+.homeLink {
+	overflow: hidden;
+}
 .logo {
-	margin: 50px 0;
-	margin-left: -15px;
+	margin-left: -20px;
 }
 
-.userIcon {
-	margin-bottom: 20px;
+.container {
+	margin-bottom: 50px;
 }
 
 .toggleThemeButton {
 	border: none;
 	background: none;
 	cursor: pointer;
-	padding: 4px;
+	margin-bottom: 25px;
+	padding-right: 5px;
 }
 
 .toggleThemeButton:hover .themeIcon {
-}
-
-.container {
-	margin-bottom: 50px;
+	fill: var(--primary-blue);
 }
 
 .userName {
@@ -37,30 +76,56 @@
 	font-weight: 400;
 	font-size: 32px;
 	color: #fff;
+	margin-bottom: 25px;
+	overflow: hidden;
+}
+
+.loginBtn_collapsed:hover svg {
+	fill: var(--primary-blue);
 }
 
 .nav {
 	list-style-type: none;
-	margin-bottom: 150px;
+	margin-bottom: 300px;
 	width: 100%;
 }
 
 .nav__item {
-	margin-bottom: 35px;
+	margin-bottom: 30px;
 	font-weight: 300;
-	font-size: 18px;
-	margin-left: 19%;
+	font-size: 20px;
+	line-height: 24px;
 }
 
 .nav__link {
 	color: var(--default-color);
 	display: flex;
-	align-items: center;
 	gap: 10px;
+	overflow: hidden;
+	white-space: nowrap;
+	width: 100%;
+	padding-bottom: 4px;
+}
+
+.isActive {
+	border-right: 4px solid var(--primary-blue);
+}
+
+.isActive .nav__text {
+	color: var(--primary-blue);
+	font-weight: bold;
+}
+
+.isActive .nav__icon {
+	color: var(--primary-blue);
+}
+
+.nav__text {
+	text-overflow: ellipsis;
 }
 
 .nav__link:hover {
-	border-right: 3px solid var(--primary-blue);
+	border-right: 5px solid var(--primary-blue);
 }
 
 .nav__link:hover .nav__text {

@@ -5,6 +5,6 @@ export interface IButtonProps
 		HTMLAttributes<HTMLButtonElement>,
 		HTMLButtonElement
 	> {
+	appearence: 'small' | 'middle' | 'big' | 'transparent' | 'pagination';
 	children: ReactNode;
-	appearence: 'small' | 'middle' | 'big';
 }

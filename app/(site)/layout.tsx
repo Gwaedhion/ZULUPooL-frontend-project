@@ -7,7 +7,7 @@ import { Sidebar } from './components/layout/Sidebar/Sidebar';
 const manrope = Manrope({ subsets: ['latin', 'cyrillic'] });
 
 export const metadata: Metadata = {
-	title: 'Main',
+	title: 'ZULUPooL',
 	description: 'ZULUPooL Web App',
 };
 
@@ -19,8 +19,8 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={manrope.className}>
-				{children}
 				<Sidebar />
+				{children}
 				<Footer />
 			</body>
 		</html>

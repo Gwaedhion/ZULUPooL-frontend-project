@@ -1,6 +1,8 @@
 import { IButtonProps } from './Button.props';
 import cn from 'classnames';
 import styles from './Button.module.css';
+import CoinIcon from '../../public/button-icons/coin.svg';
+import { useState } from 'react';
 
 export const Button = ({
 	children,
@@ -14,10 +16,16 @@ export const Button = ({
 				[styles.small]: appearence == 'small',
 				[styles.middle]: appearence == 'middle',
 				[styles.big]: appearence == 'big',
+				[styles.transparent]: appearence == 'transparent',
 			})}
 			{...props}
 		>
 			{children}
+			{appearence == 'big' ? (
+				<CoinIcon className={styles.coinIcon} />
+			) : (
+				''
+			)}
 		</button>
 	);
 };
