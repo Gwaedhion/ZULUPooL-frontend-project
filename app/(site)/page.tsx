@@ -7,8 +7,9 @@ import SmallCoinIcon from '../../public/button-icons/small-coin-icon.svg';
 import cn from 'classnames';
 import { API } from '../api';
 import axios from 'axios';
-import Table from './components/home/Table/Table';
-import { IHomeApi } from './page.interface';
+import { IHomeApi, IInstance } from './page.interface';
+import ServerIcon from '../../public/homepage-icons/server.svg';
+import { table } from 'console';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 
@@ -62,6 +63,14 @@ const coinButtonsArr = [
 	},
 ];
 
+interface ITableData {
+	protocol: string;
+	type: string;
+	port: number;
+	backends: string[];
+	shareDiff: number | undefined;
+}
+
 async function getData() {
 	const res = await axios.post(API.user.userEnumerateAll);
 	return res;
@@ -73,21 +82,18 @@ export default function Home(): JSX.Element {
 		setSelectedCoin(value);
 	};
 
-	const [selectedSubCoin, setSelectedSubCoin] = useState('subOption_0');
+	let [selectedSubCoin, setSelectedSubCoin] = useState('subOption_0');
 	const handleSubRadioChange = (value: string) => {
 		setSelectedSubCoin(value);
 	};
 
-	const currentCoin = Number(Array.from(selectedCoin.slice(-1)));
-	const currentOption = coinButtonsArr[currentCoin];
+	let currentCoin = Number(Array.from(selectedCoin.slice(-1)));
+	let currentOption = coinButtonsArr[currentCoin];
 
-	const currentSubCoin = Number(Array.from(selectedSubCoin.slice(-1)));
-	const currentSubOption =
-		coinButtonsArr[currentCoin].subcoins[currentSubCoin];
+	let currentSubCoin = Number(Array.from(selectedSubCoin.slice(-1)));
+	let currentSubOption = coinButtonsArr[currentCoin].subcoins[currentSubCoin];
 
-	console.log(currentSubOption);
-
-	const [apiData, setApiData] = useState([]);
+	const [apiData, setApiData] = useState<IHomeApi>();
 
 	useEffect(() => {
 		const apiList = async () => {
@@ -98,19 +104,13 @@ export default function Home(): JSX.Element {
 		apiList();
 	}, []);
 
+	console.log(currentSubOption);
 	console.log(apiData);
 
-	const apiDataProtocols = apiData?.instances?.map((i) => i.protocol);
-	const apiDataTypes = apiData?.instances?.map((i) => i.type);
-	const apiDataPorts = apiData?.instances?.map((i) => i.port);
-	const apiDataBackends = apiData?.instances?.map((i) => i.backends);
-	const apiDataShareDiffs = apiData?.instances?.map((i) => i.shareDiff);
-
-	console.log(apiDataProtocols);
-	console.log(apiDataTypes);
-	console.log(apiDataPorts);
-	console.log(apiDataBackends);
-	console.log(apiDataShareDiffs);
+	const instances = apiData?.instances
+		?.map((instance) => instance)
+		.filter((inst) => inst.backends.includes(currentSubOption?.title));
+	console.log(instances);
 
 	return (
 		<main className={styles.pageWrapper}>
@@ -125,6 +125,7 @@ export default function Home(): JSX.Element {
 						key={item.title}
 						onClick={() => {
 							handleRadioChange(`option_${item.id}`);
+							handleSubRadioChange('subOption_0');
 						}}
 					>
 						<input
@@ -166,8 +167,7 @@ export default function Home(): JSX.Element {
 								id={`subOption_${subItem.id}`}
 								value={`subOption_${subItem.id}`}
 								defaultChecked={
-									selectedSubCoin ===
-									`subOption_${subItem.id}`
+									selectedSubCoin == `subOption_${subItem.id}`
 								}
 							/>
 							<SmallCoinIcon />
@@ -175,12 +175,80 @@ export default function Home(): JSX.Element {
 						</Button>
 					</div>
 				))}
-				{/* <Table
-					protocol={apiData?.instances.map(
-						(instance) => instance.protocol
+			</div>
+			<table className={styles.table}>
+				<thead className={styles.tableHead}>
+					<tr className={styles.tableRow}>
+						<th className={styles.tableHeader}>Protocol</th>
+						<th className={styles.tableHeader}>Type</th>
+						<th className={styles.tableHeader}>Port</th>
+						<th className={styles.tableHeader}>Backends</th>
+						<th className={styles.tableHeader}>Difficulty</th>
+					</tr>
+				</thead>
+				<tbody className={styles.tableBody}>
+					{apiData?.instances
+						?.map((instance) => instance)
+						.filter((inst) =>
+							inst.backends.includes(currentSubOption?.title)
+						) ? (
+						instances?.map((data: IInstance, key) => (
+							<tr
+								key={key}
+								className={styles.tableRow}
+								onClick={() => {}} // there'll be tableData here. USE USESTATE
+							>
+								<td className={styles.tableCell}>
+									<span>{data.protocol}</span>
+								</td>
+								<td className={styles.tableCell}>
+									<span>{data.type}</span>
+								</td>
+								<td className={styles.tableCell}>
+									<span>{data.port}</span>
+								</td>
+								<td className={styles.tableCell}>
+									<span>{data.backends.join(', ')}</span>
+								</td>
+								<td className={styles.tableCell}>
+									<span>{data.shareDiff}</span>
+								</td>
+							</tr>
+						))
+					) : (
+						<tr className={styles.tableRow}>
+							<td className={styles.tableCell}>
+								<span>Not Found</span>
+							</td>
+							<td className={styles.tableCell}>
+								<span>Not Found</span>
+							</td>
+							<td className={styles.tableCell}>
+								<span>Not Found</span>
+							</td>
+							<td className={styles.tableCell}>
+								<span>Not Found</span>
+							</td>
+							<td className={styles.tableCell}>
+								<span>Not Found</span>
+							</td>
+						</tr>
 					)}
-				/> */}
-				{/* <Table>{}</Table> */}
+				</tbody>
+			</table>
+			<div className={styles.serverInfo}>
+				<div className={styles.startWork}>
+					<ServerIcon className={styles.serverIcon} />
+					<p className={styles.configureText}>
+						To start work with coins, configure your device to
+						connect to our server:
+					</p>
+				</div>
+				<p className={styles.serverText}>
+					{
+						'sha256.zulupool.com:5010 Username: dvl_d1e2n3i.any-worker-name-required Password: <not-an-empty-field-required>'
+					}
+				</p>
 			</div>
 		</main>
 	);

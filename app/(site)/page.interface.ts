@@ -1,6 +1,12 @@
-import { ICoinInstance } from './components/home/Table/Table.props';
-
 export interface IHomeApi {
 	status: string;
-	instances: ICoinInstance[];
+	instances: IInstance[];
+}
+
+export interface IInstance {
+	protocol: string;
+	type: string;
+	port: number;
+	backends: string[];
+	shareDiff?: number;
 }

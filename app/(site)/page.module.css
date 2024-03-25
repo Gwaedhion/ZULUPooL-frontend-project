@@ -14,7 +14,7 @@
 	display: flex;
 	justify-content: center;
 	gap: 30px;
-	padding: 10px;
+	padding: 10px 0;
 	margin-bottom: 30px;
 }
 
@@ -46,6 +46,7 @@
 	align-items: center;
 	gap: 20px;
 	padding: 10px;
+	margin-bottom: 30px;
 }
 
 .subCoinButton {
@@ -102,4 +103,38 @@
 
 .subCoinButton_active svg {
 	fill: var(--default-color);
+}
+
+.table {
+	border: 2px solid var(--tertiary-color);
+	border-radius: 5px;
+	max-width: 1230px;
+	width: 100%;
+}
+
+.tableHead .tableRow {
+	background-color: #363636;
+}
+
+.tableHeader {
+	color: var(--default-color);
+	border-radius: 5px;
+}
+
+.tableCell,
+.tableHeader {
+	padding: 5px 40px;
+}
+
+.tableBody .tableRow:nth-child(odd) {
+	background-color: #ededed;
+}
+
+.tableCell {
+	text-align: center;
+}
+
+.tableBody .tableRow:hover {
+	background-color: #b1b1b1;
+	cursor: pointer;
 }

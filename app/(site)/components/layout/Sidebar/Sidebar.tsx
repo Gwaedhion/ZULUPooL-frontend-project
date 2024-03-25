@@ -62,7 +62,7 @@ const iconsArray = [
 
 export const Sidebar = ({ ...props }: ISidebarProps): JSX.Element => {
 	const pathname = usePathname();
-	const [expanded, setExpanded] = useState(true);
+	const [expanded, setExpanded] = useState(false);
 	return (
 		<aside
 			className={cn(styles.sidebar, {
