@@ -1,0 +1,95 @@
+.coinButtonsContainer {
+	margin-top: 40px;
+	display: flex;
+	justify-content: center;
+	gap: 30px;
+	padding: 10px 0;
+	margin-bottom: 30px;
+}
+
+.input {
+	opacity: 0;
+	position: absolute;
+	cursor: pointer;
+}
+
+.coinButton_active {
+	box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+	background-image: linear-gradient(
+		to left,
+		var(--primary-blue) 0%,
+		var(--primary-purple) 100%
+	);
+	transition: 0.5s;
+	border-radius: 10px;
+}
+
+.coinButton_active svg {
+	fill: white;
+}
+
+.subCoinsWrapper {
+	width: fit-content;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	gap: 20px;
+	padding: 10px;
+	margin-bottom: 30px;
+}
+
+.subCoinButton {
+	display: flex;
+	align-items: baseline;
+	gap: 10px;
+	font-weight: bold;
+	background-color: var(--tertiary-color);
+	padding: 10px 15px;
+	border-radius: 30px;
+	position: relative;
+	overflow: hidden;
+}
+
+.subCoinButton::before {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-image: linear-gradient(
+		to right,
+		var(--primary-blue) 0%,
+		var(--primary-purple) 100%
+	);
+	transition: 0.5s;
+	opacity: 0;
+}
+
+.subCoinButton:hover::before {
+	opacity: 1;
+}
+
+.subCoinButton:hover {
+	background-color: transparent;
+	box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.subCoinButton:hover svg {
+	fill: var(--default-color);
+}
+
+.subCoinButton_active {
+	box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+	background-image: linear-gradient(
+		to right,
+		var(--primary-blue) 0%,
+		var(--primary-purple) 100%
+	);
+	transition: 0.5s;
+}
+
+.subCoinButton_active svg {
+	fill: var(--default-color);
+}

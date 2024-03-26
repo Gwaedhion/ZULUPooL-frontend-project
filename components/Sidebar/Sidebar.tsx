@@ -5,17 +5,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/Button/Button';
 import ToggleThemeIcon from './dark-mode.svg';
-import LoginIcon from '../../../../../public/sidebar-icons/log-in.svg';
-import CollapseIcon from '../../../../../public/sidebar-icons/collapse.svg';
-import ExpandIcon from '../../../../../public/sidebar-icons/expand.svg';
+import LoginIcon from '../../public/sidebar-icons/log-in.svg';
+import CollapseIcon from '../../public/sidebar-icons/collapse.svg';
+import ExpandIcon from '../../public/sidebar-icons/expand.svg';
 import { useState } from 'react';
 import cn from 'classnames';
-import PoolHistoryIcon from '../../../../../public/sidebar-icons/pool-history.svg';
-import RewardsIcon from '../../../../../public/sidebar-icons/info.svg';
-import MonitorngIcon from '../../../../../public/sidebar-icons/monitoring.svg';
-import HistoryIcon from '../../../../../public/sidebar-icons/history.svg';
-import PayoutsIcon from '../../../../../public/sidebar-icons/payouts.svg';
-import SettingsIcon from '../../../../../public/sidebar-icons/settings.svg';
+import PoolHistoryIcon from '../../public/sidebar-icons/pool-history.svg';
+import RewardsIcon from '../../public/sidebar-icons/info.svg';
+import MonitorngIcon from '../../public/sidebar-icons/monitoring.svg';
+import HistoryIcon from '../../public/sidebar-icons/history.svg';
+import PayoutsIcon from '../../public/sidebar-icons/payouts.svg';
+import SettingsIcon from '../../public/sidebar-icons/settings.svg';
 import { usePathname } from 'next/navigation';
 
 const sidebarItems = [

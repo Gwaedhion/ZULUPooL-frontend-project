@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { Manrope } from 'next/font/google';
 import './globals.css';
-import { Footer } from './components/layout/Footer/Footer';
-import { Sidebar } from './components/layout/Sidebar/Sidebar';
+import { Footer } from '../../components/Footer/Footer';
+import { Sidebar } from '../../components/Sidebar/Sidebar';
 
 const manrope = Manrope({ subsets: ['latin', 'cyrillic'] });
 
