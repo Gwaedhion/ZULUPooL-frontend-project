@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import { API } from '../api';
 import axios from 'axios';
 import { IHomeApi, IInstance } from './page.interface';
-import ServerIcon from '../../public/homepage-icons/server.svg';
 import CoinButtons from '../../components/CoinButtons/CoinButtons';
+import CoinsInfo from '@/components/CoinsInfo/CoinsInfo';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 
@@ -25,20 +25,36 @@ export default function Home(): JSX.Element {
 		apiList();
 	}, []);
 
-	const [rowData, setRowData] = useState<IInstance | undefined>();
+	const [rowData, setRowData] = useState<IInstance | undefined>({
+		protocol: 'stratum',
+		type: 'BTC',
+		port: 5010,
+		backends: ['BTC', 'BCHN'],
+		shareDiff: 10000,
+	});
 
-	const [value, setValue] = useState({
+	const [currentMainCoin, setCurrentMainCoin] = useState({
+		title: 'sha256',
+		id: 0,
+	});
+
+	const [currentSecondaryCoin, setCurrentSecondaryCoin] = useState({
 		title: 'BTC',
 		id: 0,
 	});
 
 	const instances = apiData?.instances
 		?.map((instance) => instance)
-		.filter((inst) => inst.backends.includes(value?.title));
+		.filter((inst) => inst.backends.includes(currentSecondaryCoin?.title));
 
 	return (
 		<main className={styles.pageWrapper}>
-			<CoinButtons setValue={setValue} value={value} />
+			<CoinButtons
+				setCurrentSecondaryCoin={setCurrentSecondaryCoin}
+				currentSecondaryCoin={currentSecondaryCoin}
+				currentMainCoin={currentMainCoin}
+				setCurrentMainCoin={setCurrentMainCoin}
+			/>
 			<table className={styles.table}>
 				<thead className={styles.tableHead}>
 					<tr className={styles.tableRow}>
@@ -53,7 +69,7 @@ export default function Home(): JSX.Element {
 					{apiData?.instances
 						?.map((instance) => instance)
 						.filter((inst) =>
-							inst.backends.includes(value?.title)
+							inst.backends.includes(currentSecondaryCoin?.title)
 						) ? (
 						instances?.map((data: IInstance, key) => (
 							<tr
@@ -67,8 +83,7 @@ export default function Home(): JSX.Element {
 										backends: data.backends,
 										shareDiff: data.shareDiff,
 									});
-									console.log(rowData);
-								}} // there'll be tableData here. USE USESTATE
+								}}
 							>
 								<td className={styles.tableCell}>
 									<span>{data.protocol}</span>
@@ -110,19 +125,42 @@ export default function Home(): JSX.Element {
 			</table>
 			<div className={styles.serverInfo}>
 				<div className={styles.startWork}>
-					<ServerIcon className={styles.serverIcon} />
 					<p className={styles.configureText}>
-						To start work with coins, configure your device to
-						connect to our server:
+						To start work with{' '}
+						<span className={styles.textCoins}>
+							{rowData?.backends.join(', ')}
+						</span>{' '}
+						coins, configure your device to connect to our server:
 					</p>
 				</div>
 
-				<p className={styles.serverText}>
+				<div className={styles.serverText}>
+					<div>
+						sha256.zulupool.com:{' '}
+						<span className={styles.textCoins}>
+							{rowData?.port}
+						</span>
+					</div>
 					{
-						'sha256.zulupool.com:5010 Username: dvl_d1e2n3i.any-worker-name-required Password: <not-an-empty-field-required>'
+						<div>
+							<span className={styles.userInfoCoins}>
+								Username:
+							</span>{' '}
+							dvl_d1e2n3i.any-worker-name-required
+						</div>
+					}{' '}
+					{
+						<div>
+							<span className={styles.userInfoCoins}>
+								Password:
+							</span>
+							{'<not-an-empty-field-required>'}
+						</div>
 					}
-				</p>
+				</div>
 			</div>
+
+			<CoinsInfo currentMainCoin={currentMainCoin} rowData={rowData!} />
 		</main>
 	);
 }

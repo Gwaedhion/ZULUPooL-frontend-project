@@ -1,6 +1,5 @@
 .footer {
 	height: 40px;
-	gap: 40px;
 	background: var(--tertiary-color);
 	color: var(--default-color);
 	font-weight: 300;
@@ -9,9 +8,11 @@
 	align-items: center;
 	justify-content: center;
 	gap: 50px;
-	position: absolute;
-	width: 100vw;
+	width: 100%;
+	position: fixed;
 	bottom: 0;
+	left: 0;
+	right: 0;
 }
 
 .footerItem {

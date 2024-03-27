@@ -1,9 +1,9 @@
 import { Button } from '@/components/Button/Button';
 import SmallCoinIcon from '../../public/button-icons/small-coin-icon.svg';
 import styles from './CoinButtons.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import cn from 'classnames';
-import { ICoin, ICurrentCoin } from '@/app/(site)/page.interface';
+import { IHandleCurrentCoin } from '@/app/(site)/page.interface';
 
 const coinButtonsArr = [
 	{
@@ -55,7 +55,7 @@ const coinButtonsArr = [
 	},
 ];
 
-export default function CoinButtons(props: ICoin): JSX.Element {
+export default function CoinButtons(coins: IHandleCurrentCoin): JSX.Element {
 	const [selectedCoin, setSelectedCoin] = useState('option_0');
 	const handleRadioChange = (value: string) => {
 		setSelectedCoin(value);
@@ -69,10 +69,24 @@ export default function CoinButtons(props: ICoin): JSX.Element {
 	let currentCoin = Number(Array.from(selectedCoin.slice(-1)));
 	let currentOption = coinButtonsArr[currentCoin];
 
-	let currentSubCoin = Number(Array.from(selectedSubCoin.slice(-1)));
+	let currSubOption = {
+		title: currentOption.subcoins[0].title,
+		id: currentOption.subcoins[0].id,
+	};
+
+	useEffect(() => {
+		coins.setCurrentSecondaryCoin(currSubOption);
+	}, [selectedCoin]);
+
+	useEffect(() => {
+		coins.setCurrentMainCoin({
+			title: currentOption.title,
+			id: currentOption.id,
+		});
+	}, [selectedCoin]);
 
 	return (
-		<div>
+		<div className={styles.pageWrapper}>
 			<div className={styles.coinButtonsContainer}>
 				{coinButtonsArr.map((item) => (
 					<Button
@@ -84,19 +98,20 @@ export default function CoinButtons(props: ICoin): JSX.Element {
 						key={item.title}
 						onClick={() => {
 							handleRadioChange(`option_${item.id}`);
+
 							handleSubRadioChange('subOption_0');
+
+							coins.setCurrentSecondaryCoin({
+								title: currentOption.subcoins[0].title,
+								id: currentOption.subcoins[0].id,
+							});
+
+							coins.setCurrentMainCoin({
+								title: selectedCoin,
+								id: currentCoin,
+							});
 						}}
 					>
-						<input
-							className={styles.input}
-							type="radio"
-							name="coin"
-							id={`option_${item.id}`}
-							value={`option_${item.id}`}
-							defaultChecked={
-								selectedCoin === `option_${item.id}`
-							}
-						/>
 						{item.title}
 					</Button>
 				))}
@@ -117,19 +132,9 @@ export default function CoinButtons(props: ICoin): JSX.Element {
 							})}
 							onClick={() => {
 								handleSubRadioChange(`subOption_${subItem.id}`);
-								props.setValue(subItem);
+								coins.setCurrentSecondaryCoin(subItem);
 							}}
 						>
-							<input
-								className={styles.input}
-								type="radio"
-								name="subCoin"
-								id={`subOption_${subItem.id}`}
-								value={`subOption_${subItem.id}`}
-								defaultChecked={
-									selectedSubCoin == `subOption_${subItem.id}`
-								}
-							/>
 							<SmallCoinIcon />
 							{subItem.title}
 						</Button>

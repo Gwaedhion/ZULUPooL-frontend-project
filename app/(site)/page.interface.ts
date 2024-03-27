@@ -18,7 +18,14 @@ export interface ICurrentCoin {
 	id: number;
 }
 
-export interface ICoin {
-	value: ICurrentCoin;
-	setValue: Dispatch<SetStateAction<ICurrentCoin>>;
+export interface IHandleCurrentCoin {
+	currentSecondaryCoin: ICurrentCoin;
+	setCurrentSecondaryCoin: Dispatch<SetStateAction<ICurrentCoin>>;
+	currentMainCoin: ICurrentCoin;
+	setCurrentMainCoin: Dispatch<SetStateAction<ICurrentCoin>>;
+}
+
+export interface ICurrentState {
+	currentMainCoin: ICurrentCoin;
+	rowData: IInstance;
 }

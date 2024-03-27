@@ -2,7 +2,7 @@
 	--primary-purple: #8f16ff;
 	--primary-blue: #107eff;
 	--secondary-color: #cca43b;
-	--tertiary-color: #342e3a;
+	--tertiary-color: #1d1d1d;
 	--default-color: #ffffff;
 	--text-color: #000000;
 }
@@ -20,6 +20,8 @@ body {
 		),
 		url('../../public/background-image.svg');
 	background-size: cover;
+	height: 100vh;
+	padding-bottom: 100px;
 }
 
 html,

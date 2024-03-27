@@ -1,5 +1,5 @@
 .pageWrapper {
-	max-width: 1440px;
+	max-width: 1230px;
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
@@ -11,7 +11,7 @@
 
 .table {
 	border-radius: 5px;
-	max-width: 1230px;
+	max-width: 100%;
 	width: 100%;
 	margin-bottom: 30px;
 }
@@ -42,6 +42,44 @@
 }
 
 .tableBody .tableRow:hover {
-	background-color: #b1b1b1;
+	background-color: #8c8c8c;
 	cursor: pointer;
+}
+
+.serverInfo {
+	max-width: 100%;
+	padding: 10px;
+	width: 100%;
+	background-color: var(--tertiary-color);
+	color: var(--default-color);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 30px;
+	border-radius: 5px;
+	font-size: 18px;
+	opacity: 90%;
+}
+
+.startWork {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 5px;
+}
+
+.textCoins {
+	color: var(--secondary-color);
+}
+
+.userInfoCoins {
+	color: var(--secondary-color);
+}
+
+.serverText {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }

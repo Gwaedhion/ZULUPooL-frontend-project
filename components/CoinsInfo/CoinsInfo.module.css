@@ -1,0 +1,79 @@
+.portWarning {
+	width: 100%;
+	height: 50px;
+	background-color: var(--tertiary-color);
+	color: var(--default-color);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 5px;
+	margin-bottom: 30px;
+}
+
+.infoWrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.coinAlerts__item {
+	max-width: 600px;
+	display: flex;
+	align-items: center;
+	font-size: 18px;
+	line-height: 24px;
+	font-weight: 700;
+	height: 70px;
+	gap: 20px;
+}
+
+.coinAlerts__text {
+	max-width: 440px;
+}
+
+.coinAlerts__icon {
+}
+
+.secondaryInfo__text {
+	max-width: 630px;
+}
+
+.decoration__icon {
+	margin-left: 25px;
+}
+
+.secondaryInfoWrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	gap: 30px;
+}
+
+.secondaryInfo__payments,
+.secondaryInfo__support {
+	padding-left: 30px;
+}
+
+.secondaryInfo__payments {
+	border-left: 5px solid var(--primary-purple);
+}
+
+.secondaryInfo__support {
+	border-left: 5px solid var(--primary-blue);
+}
+
+.secondaryInfo__title {
+	line-height: 28px;
+	margin-bottom: 20px;
+}
+
+.secondaryInfo__link {
+	background: -webkit-linear-gradient(
+		var(--primary-blue) 30%,
+		var(--primary-purple) 100%
+	);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	border-bottom: 1px solid transparent;
+}
