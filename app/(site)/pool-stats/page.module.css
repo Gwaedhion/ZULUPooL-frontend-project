@@ -1,6 +1,50 @@
 .pageWrapper {
-	max-width: 1440px;
+	max-width: 1230px;
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.table {
+	border-radius: 5px;
+	max-width: 100%;
+	width: 100%;
+	margin-bottom: 50px;
+}
+
+.tableHead .tableRow {
+	background-color: #363636;
+}
+
+.tableHeader {
+	color: var(--default-color);
+	border-radius: 5px;
+	cursor: pointer;
+	position: relative;
+}
+
+.icon {
+	position: absolute;
+	right: 5px;
+}
+
+.tableCell,
+.tableHeader {
+	padding: 5px 40px;
+}
+
+.tableBody .tableRow:nth-child(odd) {
+	background-color: #ededed;
+}
+.tableBody .tableRow:nth-child(even) {
+	background-color: #c3c3c3;
+}
+
+.tableCell {
+	text-align: center;
+}
+
+.tableBody .tableRow:hover {
+	background-color: #8c8c8c;
+	cursor: pointer;
 }

@@ -17,6 +17,7 @@ import HistoryIcon from '../../public/sidebar-icons/history.svg';
 import PayoutsIcon from '../../public/sidebar-icons/payouts.svg';
 import SettingsIcon from '../../public/sidebar-icons/settings.svg';
 import { usePathname } from 'next/navigation';
+import { motion } from 'framer-motion';
 
 const sidebarItems = [
 	{

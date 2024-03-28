@@ -15,6 +15,7 @@
 	justify-content: center;
 	align-items: center;
 	width: 100%;
+	margin-bottom: 100px;
 }
 
 .coinAlerts__item {
@@ -46,26 +47,29 @@
 .secondaryInfoWrapper {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
 	gap: 30px;
+	height: 100%;
 }
 
 .secondaryInfo__payments,
 .secondaryInfo__support {
 	padding-left: 30px;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
 }
 
 .secondaryInfo__payments {
-	border-left: 5px solid var(--primary-purple);
+	border-left: 4px solid var(--primary-purple);
 }
 
 .secondaryInfo__support {
-	border-left: 5px solid var(--primary-blue);
+	border-left: 4px solid var(--primary-blue);
 }
 
 .secondaryInfo__title {
-	line-height: 28px;
-	margin-bottom: 20px;
+	line-height: 36px;
+	margin-bottom: 10px;
 }
 
 .secondaryInfo__link {
@@ -75,5 +79,19 @@
 	);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
-	border-bottom: 1px solid transparent;
+	font-weight: 600;
+}
+
+.copyToClipboardButton {
+	background: transparent;
+	border: none;
+	font-size: 16px;
+	cursor: pointer;
+	font-weight: 600;
+	background: -webkit-linear-gradient(
+		var(--primary-blue) 30%,
+		var(--primary-purple) 100%
+	);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }

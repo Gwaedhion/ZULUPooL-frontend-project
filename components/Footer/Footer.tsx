@@ -6,7 +6,10 @@ export const Footer = ({ ...props }: IFooterProps): JSX.Element => {
 		<footer className={styles.footer}>
 			<div className={styles.footerItem}>
 				<p>ZULUPooL</p>
-				<a className={styles.link} href="#">
+				<a
+					className={styles.link}
+					href="https://discord.com/invite/ugsST2BptA"
+				>
 					Discord
 				</a>
 			</div>
@@ -15,7 +18,7 @@ export const Footer = ({ ...props }: IFooterProps): JSX.Element => {
 					Your access and use of the Services constitutes your
 					agreement to be bound by these
 				</p>
-				<a className={styles.link} href="#">
+				<a className={styles.link} href="/terms">
 					Terms
 				</a>
 			</div>
@@ -25,7 +28,10 @@ export const Footer = ({ ...props }: IFooterProps): JSX.Element => {
 					v2.18.35b
 				</a>
 				<p>PoolCore</p>
-				<a className={styles.link} href="#">
+				<a
+					className={styles.link}
+					href="https://github.com/eXtremal-ik7/poolcore"
+				>
 					v0.9999b
 				</a>
 			</div>

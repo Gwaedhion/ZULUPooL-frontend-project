@@ -188,7 +188,20 @@ export default function CoinsInfo({
 							>
 								Discord
 							</a>
-							, or by email: pool@jsoncrypto.com
+							, or by email:{' '}
+							<button
+								className={styles.copyToClipboardButton}
+								onClick={() => {
+									navigator.clipboard.writeText(
+										'pool@jsoncrypto.com'
+									);
+									alert(
+										'E-mail address copied to clipboard!'
+									);
+								}}
+							>
+								pool@jsoncrypto.com
+							</button>
 						</p>
 					</div>
 				</div>

@@ -29,3 +29,7 @@ export interface ICurrentState {
 	currentMainCoin: ICurrentCoin;
 	rowData: IInstance;
 }
+
+export interface ICurrentRowData {
+	setRowData: Dispatch<SetStateAction<IInstance>>;
+}

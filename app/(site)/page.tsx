@@ -7,6 +7,9 @@ import axios from 'axios';
 import { IHomeApi, IInstance } from './page.interface';
 import CoinButtons from '../../components/CoinButtons/CoinButtons';
 import CoinsInfo from '@/components/CoinsInfo/CoinsInfo';
+import Rewards from '@/components/Rewards/Rewards';
+import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import HomePageTable from '@/components/HomePageTable/HomePageTable';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 
@@ -49,6 +52,7 @@ export default function Home(): JSX.Element {
 
 	return (
 		<main className={styles.pageWrapper}>
+			<ProgressBar />
 			<CoinButtons
 				setCurrentSecondaryCoin={setCurrentSecondaryCoin}
 				currentSecondaryCoin={currentSecondaryCoin}
@@ -72,35 +76,14 @@ export default function Home(): JSX.Element {
 							inst.backends.includes(currentSecondaryCoin?.title)
 						) ? (
 						instances?.map((data: IInstance, key) => (
-							<tr
+							<HomePageTable
 								key={key}
-								className={styles.tableRow}
-								onClick={() => {
-									setRowData({
-										protocol: data.protocol,
-										type: data.type,
-										port: data.port,
-										backends: data.backends,
-										shareDiff: data.shareDiff,
-									});
-								}}
-							>
-								<td className={styles.tableCell}>
-									<span>{data.protocol}</span>
-								</td>
-								<td className={styles.tableCell}>
-									<span>{data.type}</span>
-								</td>
-								<td className={styles.tableCell}>
-									<span>{data.port}</span>
-								</td>
-								<td className={styles.tableCell}>
-									<span>{data.backends.join(', ')}</span>
-								</td>
-								<td className={styles.tableCell}>
-									<span>{data.shareDiff}</span>
-								</td>
-							</tr>
+								protocol={data.protocol}
+								port={data.port}
+								type={data.type}
+								backends={data.backends}
+								shareDiff={data.shareDiff}
+							/>
 						))
 					) : (
 						<tr className={styles.tableRow}>
@@ -161,6 +144,7 @@ export default function Home(): JSX.Element {
 			</div>
 
 			<CoinsInfo currentMainCoin={currentMainCoin} rowData={rowData!} />
+			<Rewards />
 		</main>
 	);
 }

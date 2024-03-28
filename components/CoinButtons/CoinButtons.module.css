@@ -5,7 +5,7 @@
 }
 
 .coinButtonsContainer {
-	margin-top: 40px;
+	margin-top: 20px;
 	display: flex;
 	justify-content: center;
 	gap: 30px;
@@ -35,7 +35,7 @@
 	align-items: center;
 	gap: 20px;
 	padding: 10px;
-	margin-bottom: 30px;
+	margin-bottom: 40px;
 }
 
 .subCoinButton {

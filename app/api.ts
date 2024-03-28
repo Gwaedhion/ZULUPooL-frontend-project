@@ -39,6 +39,9 @@ export const API = {
 			process.env.NEXT_PUBLIC_DOMAIN + '/api/backendQueryCoins',
 		backendQueryPayouts:
 			process.env.NEXT_PUBLIC_DOMAIN + '/api/backendQueryPayouts',
+		backendQueryPoolStatsHistory:
+			process.env.NEXT_PUBLIC_DOMAIN +
+			'/api/backendQueryPoolStatsHistory',
 		backendQueryUserStats:
 			process.env.NEXT_PUBLIC_DOMAIN + '/api/backendQueryUserStats',
 		backendQueryUserStatsHistory:
