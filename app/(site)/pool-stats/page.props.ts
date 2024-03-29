@@ -10,3 +10,11 @@ export interface IStatisticsData {
 	shareWork: number;
 	power: number;
 }
+
+export interface IStatisticsUIData {
+	name: string;
+	time: string;
+	shareRate: string;
+	shareWork: string;
+	power: string;
+}

@@ -1,13 +1,19 @@
 'use client';
 import styles from './page.module.css';
 import CoinButtons from '@/components/CoinButtons/CoinButtons';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useContext } from 'react';
 import axios from 'axios';
 import { API } from '@/app/api';
-import { IStatisticsData, IStatisticsResponse } from './page.props';
-import SortIcon from '../../../public/statisticspage-icons/sort-icon.svg';
+import {
+	IStatisticsData,
+	IStatisticsResponse,
+	IStatisticsUIData,
+} from './page.props';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
-import TableData from './TableData';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import 'primereact/resources/themes/viva-dark/theme.css';
+import 'primereact/resources/primereact.min.css';
 
 export default function Info(): JSX.Element {
 	const [currentMainCoin, setCurrentMainCoin] = useState({
@@ -26,7 +32,7 @@ export default function Info(): JSX.Element {
 	});
 
 	const dataToPost = {
-		coin: currentMainCoin.title,
+		coin: currentSecondaryCoin.title,
 		groupByInterval: 86400,
 		timeFrom: 1606424400,
 	};
@@ -35,27 +41,40 @@ export default function Info(): JSX.Element {
 
 	useEffect(() => {
 		const apiList = async () => {
-			axios
+			await axios
 				.post(API.user.backendQueryPoolStatsHistory, dataToJSON)
 				.then((res) => setApiData(res.data));
 		};
 		apiList();
 	}, [dataToJSON]);
 
-	const data = apiData?.stats;
+	const dataInitial: IStatisticsData[] | undefined = apiData?.stats;
 
-	const [sortedField, setSortedField] = useState({
-		key: 'time',
-		direction: 'descending',
-	});
+	console.log(apiData);
 
-	let sortedData: IStatisticsData[] | undefined = [
-		...(data?.map((d) => d) ?? []),
-	];
+	// const modifiedData: IStatisticsData[] = [];
 
-	useEffect(() => {
-		sortedData?.sort((item1, item2) => {});
-	});
+	// const modifyApiData = (array: IStatisticsData[]): IStatisticsUIData[] => {
+	// 	const modifiedData: IStatisticsUIData[] = [];
+	// 	for (let i of array) {
+	// 		console.log(i.time);
+
+	// 		const newItem: IStatisticsUIData = {
+	// 			name: '',
+	// 			time: new Date(Number(i.time * 1000)).toLocaleDateString(
+	// 				'en-US',
+	// 				{ day: 'numeric', month: 'numeric', year: '2-digit' }
+	// 			),
+	// 			shareRate: String(i.shareRate),
+	// 			shareWork: String(i.shareWork),
+	// 			power: String(i.power),
+	// 		};
+	// 		modifiedData.push(newItem);
+	// 	}
+	// 	return modifiedData;
+	// };
+
+	// const data = modifyApiData(apiData?.stats ?? []);
 
 	return (
 		<div className={styles.pageWrapper}>
@@ -66,85 +85,89 @@ export default function Info(): JSX.Element {
 				currentMainCoin={currentMainCoin}
 				setCurrentMainCoin={setCurrentMainCoin}
 			/>
-			<table className={styles.table}>
-				<thead className={styles.tableHead}>
-					<tr className={styles.tableRow}>
-						<th className={styles.tableHeader}>
-							<button
-								type="button"
-								className={styles.sortButton}
-								onClick={() => {
-									setSortedField({
-										key: 'time',
-										direction: 'descending',
-									});
-								}}
-							>
-								Date
-							</button>
-							<SortIcon className={styles.icon} />
-						</th>
-						<th className={styles.tableHeader}>
-							<button
-								type="button"
-								className={styles.sortButton}
-								onClick={() => {
-									setSortedField({
-										key: 'shareRate',
-										direction: 'descending',
-									});
-								}}
-							>
-								Share rate
-							</button>
-							<SortIcon className={styles.icon} />
-						</th>
-						<th className={styles.tableHeader}>
-							<button
-								type="button"
-								className={styles.sortButton}
-								onClick={() => {
-									setSortedField({
-										key: 'shareWork',
-										direction: 'descending',
-									});
-								}}
-							>
-								Hashrate
-							</button>
-							<SortIcon className={styles.icon} />
-						</th>
-						<th className={styles.tableHeader}>
-							<button
-								type="button"
-								className={styles.sortButton}
-								onClick={() => {
-									setSortedField({
-										key: 'power',
-										direction: 'descending',
-									});
-								}}
-							>
-								Accepted difficulty
-							</button>
-							<SortIcon className={styles.icon} />
-						</th>
-					</tr>
-				</thead>
-				<tbody className={styles.tableBody}>
-					{data !== undefined &&
-						data?.map((item) => (
-							<TableData
-								key={item.time}
-								name={item.name}
-								time={item.time}
-								shareRate={item.shareRate}
-								shareWork={item.shareWork}
-								power={item.power}
-							/>
-						))}
-				</tbody>
-			</table>
+			<DataTable
+				value={dataInitial}
+				paginator
+				rows={20}
+				rowsPerPageOptions={[20, 50, 100, 200, 500, 1000]}
+				totalRecords={1000}
+				className={styles.table}
+				showGridlines
+				sortField="time"
+				sortOrder={-1}
+			>
+				<Column
+					field={'time'}
+					header={'Date'}
+					sortable
+					body={(rowData) => (
+						<>
+							{new Date(rowData.time * 1000).toLocaleDateString(
+								`${navigator.language}`,
+								{
+									day: 'numeric',
+									month: 'numeric',
+									year: '2-digit',
+								}
+							)}
+						</>
+					)}
+				/>
+				<Column
+					field={'shareRate'}
+					header={'Share rate (share/s)'}
+					sortable
+				/>
+				<Column
+					field={'power'}
+					header={'Hashrate'}
+					sortable
+					body={(rowData) => (
+						<>
+							{rowData.power > 1000
+								? rowData.power < 1_000_000
+									? `${(rowData.power / 1_000).toFixed(
+											3
+									  )} MH/s`
+									: rowData.power < 1_000_000_000
+									? `${(rowData.power / 1_000_000).toFixed(
+											3
+									  )} GH/s`
+									: rowData.power < 1_000_000_000_000
+									? `${(
+											rowData.power / 1_000_000_000
+									  ).toFixed(3)} TH/s`
+									: rowData.power < 1_000_000_000_000_000
+									? `${(
+											rowData.power / 1_000_000_000_000
+									  ).toFixed(3)} PH/s`
+									: rowData.power < 1_000_000_000_000_000_000
+									? `${(
+											rowData.power /
+											1_000_000_000_000_000
+									  ).toFixed(3)} EH/s`
+									: rowData.power <
+									  1_000_000_000_000_000_000_000
+									? `${(
+											rowData.power /
+											1_000_000_000_000_000_000
+									  ).toFixed(3)} ZH/s`
+									: `Not found`
+								: 0}
+						</>
+					)}
+				/>
+				<Column
+					field={'shareWork'}
+					header={'Accepted difficulty (M)'}
+					sortable
+					body={(rowData) =>
+						rowData.shareWork > 0
+							? (rowData.shareWork / 1000000).toFixed(3)
+							: 0
+					}
+				/>
+			</DataTable>
 		</div>
 	);
 }

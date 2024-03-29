@@ -9,7 +9,6 @@ import CoinButtons from '../../components/CoinButtons/CoinButtons';
 import CoinsInfo from '@/components/CoinsInfo/CoinsInfo';
 import Rewards from '@/components/Rewards/Rewards';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
-import HomePageTable from '@/components/HomePageTable/HomePageTable';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 
@@ -76,14 +75,35 @@ export default function Home(): JSX.Element {
 							inst.backends.includes(currentSecondaryCoin?.title)
 						) ? (
 						instances?.map((data: IInstance, key) => (
-							<HomePageTable
+							<tr
 								key={key}
-								protocol={data.protocol}
-								port={data.port}
-								type={data.type}
-								backends={data.backends}
-								shareDiff={data.shareDiff}
-							/>
+								className={styles.tableRow}
+								onClick={() => {
+									setRowData({
+										protocol: data.protocol,
+										type: data.type,
+										port: data.port,
+										backends: data.backends,
+										shareDiff: data.shareDiff,
+									});
+								}}
+							>
+								<td className={styles.tableCell}>
+									<span>{data.protocol}</span>
+								</td>
+								<td className={styles.tableCell}>
+									<span>{data.type}</span>
+								</td>
+								<td className={styles.tableCell}>
+									<span>{data.port}</span>
+								</td>
+								<td className={styles.tableCell}>
+									<span>{data.backends.join(', ')}</span>
+								</td>
+								<td className={styles.tableCell}>
+									<span>{data.shareDiff}</span>
+								</td>
+							</tr>
 						))
 					) : (
 						<tr className={styles.tableRow}>
