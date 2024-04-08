@@ -118,27 +118,21 @@ export default function CoinButtons(coins: IHandleCurrentCoin): JSX.Element {
 			</div>
 			<div className={styles.subCoinsWrapper}>
 				{currentOption.subcoins.map((subItem) => (
-					<div
+					<Button
+						appearence="transparent"
 						key={subItem.title}
-						className={styles.subCoinContainer}
+						className={cn(styles.subCoinButton, {
+							[styles.subCoinButton_active]:
+								selectedSubCoin == `subOption_${subItem.id}`,
+						})}
+						onClick={() => {
+							handleSubRadioChange(`subOption_${subItem.id}`);
+							coins.setCurrentSecondaryCoin(subItem);
+						}}
 					>
-						<Button
-							appearence="transparent"
-							key={subItem.title}
-							className={cn(styles.subCoinButton, {
-								[styles.subCoinButton_active]:
-									selectedSubCoin ==
-									`subOption_${subItem.id}`,
-							})}
-							onClick={() => {
-								handleSubRadioChange(`subOption_${subItem.id}`);
-								coins.setCurrentSecondaryCoin(subItem);
-							}}
-						>
-							<SmallCoinIcon />
-							{subItem.title}
-						</Button>
-					</div>
+						<SmallCoinIcon />
+						{subItem.title}
+					</Button>
 				))}
 			</div>
 		</div>

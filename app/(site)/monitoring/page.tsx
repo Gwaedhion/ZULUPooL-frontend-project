@@ -1,10 +1,6 @@
-import { Metadata } from 'next';
+'use client';
 import styles from './page.module.css';
 
-export const metadata: Metadata = {
-	title: 'Monitoring',
-};
-
-export default function Info() {
-	return <div className={styles.pageWrapper}>monitoring</div>;
+export default function Monitoring() {
+	return <div className={styles.pageWrapper}></div>;
 }

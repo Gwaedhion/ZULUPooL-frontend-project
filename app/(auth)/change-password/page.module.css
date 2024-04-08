@@ -1,0 +1,9 @@
+.pageWrapper {
+	height: 100vh;
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all 1s;
+}

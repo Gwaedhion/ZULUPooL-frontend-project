@@ -1,0 +1,170 @@
+.pageWrapper {
+	height: 100vh;
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all 1s;
+}
+
+.pageWrapper_blue {
+	background: var(--primary-blue);
+}
+
+.pageWrapper_purple {
+	background: var(--primary-purple);
+}
+
+.container {
+	position: relative;
+	width: 800px;
+	height: 400px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: all 1s;
+	z-index: 10;
+}
+
+.container_blue {
+	background: #1774e1;
+}
+.container_purple {
+	background: #8013e6;
+}
+
+.container .box {
+	position: relative;
+	width: 50%;
+	height: 100%;
+	z-index: 10;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding: 40px;
+}
+
+.container .box .h2 {
+	color: var(--default-color);
+	font-size: 1.2em;
+	font-weight: 500;
+	margin-bottom: 10px;
+}
+
+.container .box button {
+	cursor: pointer;
+	padding: 10px 20px;
+	background: var(--default-color);
+	font-size: 16px;
+	font-weight: 500;
+	border: none;
+	outline: none;
+}
+
+.formBox {
+	position: absolute;
+	width: 350px;
+	height: 480px;
+	background: var(--default-color);
+	z-index: 1000;
+	box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+	transition: all 1s;
+	transition-delay: all 0.1s;
+}
+
+.formBox_blue {
+	transform: translateX(-180px);
+}
+
+.formBox_purple {
+	transform: translateX(180px);
+}
+
+.signInForm,
+.signUpForm {
+	display: flex;
+	flex-direction: column;
+	padding: 20px 20px;
+	gap: 5px;
+}
+
+.decoration {
+	width: 80px;
+	height: 80px;
+	position: absolute;
+	transition: all 1s;
+	margin-left: 800px;
+	margin-bottom: 400px;
+}
+
+.decoration_blue {
+	background-color: #1057a9;
+}
+
+.decoration_purple {
+	background-color: #670fb8;
+}
+
+.signInInput,
+.signUpInput {
+	padding: 10px;
+}
+
+.signInInput::placeholder,
+.signUpInput::placeholder {
+	text-transform: uppercase;
+	letter-spacing: 0.2em;
+}
+
+.signInButton,
+.signUpButton {
+	padding: 15px 10px;
+	cursor: pointer;
+	background-image: linear-gradient(
+		to left,
+		var(--primary-purple) 0%,
+		var(--primary-blue) 51%,
+		var(--primary-purple) 100%
+	);
+	background-size: 200% auto;
+	font-size: 18px;
+	box-shadow: 4px 4px 4px 0 rgba(0, 0, 0, 0.25);
+	transition: all 0.5s;
+	border: none;
+	color: var(--default-color);
+	position: absolute;
+	width: 88%;
+	bottom: 30px;
+}
+
+.signInButton:hover,
+.signUpButton:hover {
+	background-position: right center;
+	transform: scale(1.03);
+}
+
+.signInTitle,
+.signUpTitle {
+	margin-bottom: 20px;
+}
+
+.signInLink {
+	background: -webkit-linear-gradient(
+		var(--primary-purple) 30%,
+		var(--primary-blue) 100%
+	);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	border-bottom: 1px solid transparent;
+	width: fit-content;
+}
+
+.signInLink:hover {
+	border-bottom: 1px solid var(--primary-purple);
+}
+
+.error {
+	color: red;
+}

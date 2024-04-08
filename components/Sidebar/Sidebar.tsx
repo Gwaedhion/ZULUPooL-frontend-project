@@ -1,14 +1,14 @@
 'use client';
-import { ISidebarProps } from './Sidebar.props';
 import styles from './Sidebar.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/Button/Button';
-import ToggleThemeIcon from './dark-mode.svg';
+import DarkThemeIcon from './dark-mode.svg';
+import LightThemeIcon from './light-mode.svg';
 import LoginIcon from '../../public/sidebar-icons/log-in.svg';
 import CollapseIcon from '../../public/sidebar-icons/collapse.svg';
 import ExpandIcon from '../../public/sidebar-icons/expand.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import cn from 'classnames';
 import PoolHistoryIcon from '../../public/sidebar-icons/pool-history.svg';
 import RewardsIcon from '../../public/sidebar-icons/info.svg';
@@ -16,8 +16,12 @@ import MonitorngIcon from '../../public/sidebar-icons/monitoring.svg';
 import HistoryIcon from '../../public/sidebar-icons/history.svg';
 import PayoutsIcon from '../../public/sidebar-icons/payouts.svg';
 import SettingsIcon from '../../public/sidebar-icons/settings.svg';
-import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
+import { usePathname, useRouter } from 'next/navigation';
+import { API } from '@/app/api';
+import axios from 'axios';
+import { IuserApiSession } from '@/app/(auth)/auth/auth.interface';
+import { CircleFlag } from 'react-circle-flags';
+import { Rufina } from 'next/font/google';
 
 const sidebarItems = [
 	{
@@ -61,16 +65,84 @@ const iconsArray = [
 	<SettingsIcon className={styles.nav__icon} key={sidebarItems[5].id} />,
 ];
 
-export const Sidebar = ({ ...props }: ISidebarProps): JSX.Element => {
+export const Sidebar = (): JSX.Element => {
 	const pathname = usePathname();
+
 	const [expanded, setExpanded] = useState(false);
+
+	const router = useRouter();
+
+	const userSession: IuserApiSession = {
+		id: sessionStorage?.getItem('sessionID'),
+		sessionId: sessionStorage?.getItem('sessionID'),
+	};
+
+	const [userName, setUserName] = useState('');
+
+	const getUserName = async () => {
+		await axios
+			.post(API.user.userGetCredentials, JSON.stringify(userSession))
+			.then((res) => setUserName(res.data.name));
+	};
+
+	useEffect(() => {
+		if (global.sessionStorage.length == 0 && pathname !== '/') {
+			router.push('/auth');
+		}
+	}, [router, pathname]);
+
+	const userLogout = async () => {
+		await axios.post(API.user.userLogout, JSON.stringify(userSession));
+		global.sessionStorage.clear();
+		router.push('/auth');
+	};
+
+	useEffect(() => {
+		if (localStorage.getItem('userTheme') == null) {
+			localStorage.setItem('userTheme', 'light');
+		}
+	});
+
+	useEffect(() => {
+		if (localStorage.getItem('userLang') == null) {
+			localStorage.setItem('userLang', 'en-US');
+		}
+	});
+
+	const toggleTheme = () => {
+		if (localStorage.getItem('userTheme') == 'light') {
+			localStorage.setItem('userTheme', 'dark');
+			setTheme('dark');
+		} else if (localStorage.getItem('userTheme') == 'dark') {
+			localStorage.setItem('userTheme', 'light');
+			setTheme('light');
+		}
+	};
+
+	const toggleLanguage = () => {
+		if (localStorage.getItem('userLang') == 'en-US') {
+			localStorage.setItem('userLang', 'ru-RU');
+			setLanguage('ru-RU');
+		} else if (localStorage.getItem('userLang') == 'ru-RU') {
+			localStorage.setItem('userLang', 'en-US');
+			setLanguage('en-US');
+		}
+	};
+
+	const [theme, setTheme] = useState('light');
+
+	const [language, setLanguage] = useState('en-US');
+
+	const engFlag = () => <CircleFlag countryCode="us" height="24" />;
+	const ruFlag = () => <CircleFlag countryCode="ru" height="24" />;
+
 	return (
 		<aside
 			className={cn(styles.sidebar, {
 				[styles.expanded]: expanded,
 				[styles.collapsed]: !expanded,
 			})}
-			{...props}
+			onLoad={() => getUserName}
 		>
 			<div className={styles.logoWrapper}>
 				<Link className={styles.homeLink} href="/">
@@ -97,20 +169,31 @@ export const Sidebar = ({ ...props }: ISidebarProps): JSX.Element => {
 				</button>
 			</div>
 
-			{expanded ? (
-				<span className={styles.userName}>Username</span>
+			{expanded && !userName ? (
+				<span className={styles.userName}>{userName}</span>
 			) : (
 				<span className={styles.userName}>&nbsp;</span>
 			)}
-			<button className={styles.toggleThemeButton}>
-				<ToggleThemeIcon
-					className={styles.themeIcon}
-					src={'/dark-mode.svg'}
-					alt="Dark theme icon"
-					width={24}
-					height={24}
-				/>
-			</button>
+			<div className={styles.userExpBtnContainer}>
+				<button
+					className={styles.toggleThemeButton}
+					onClick={toggleTheme}
+				>
+					{theme == 'light' ? (
+						<DarkThemeIcon className={styles.themeIcon} />
+					) : (
+						<LightThemeIcon className={styles.themeIcon} />
+					)}
+				</button>
+
+				<button
+					className={styles.toggleLanguageButton}
+					onClick={toggleLanguage}
+				>
+					{language == 'en-US' ? engFlag() : ruFlag()}
+				</button>
+			</div>
+
 			<ul className={styles.nav}>
 				{sidebarItems.map((item) => {
 					const isActive = pathname.startsWith(item.href);
@@ -145,14 +228,20 @@ export const Sidebar = ({ ...props }: ISidebarProps): JSX.Element => {
 				})}
 			</ul>
 			{expanded ? (
-				<Button className={styles.loginBtn} appearence="middle">
-					<LoginIcon className={styles.loginIcon} />
-					Login
+				<Button
+					className={styles.logOutBtn}
+					appearence="middle"
+					type="button"
+					onClick={userLogout}
+				>
+					Log Out
 				</Button>
 			) : (
 				<Button
-					className={styles.loginBtn_collapsed}
+					className={styles.logOutBtn_collapsed}
 					appearence="small"
+					type="button"
+					onClick={userLogout}
 				>
 					<LoginIcon className={styles.loginIcon} />
 				</Button>

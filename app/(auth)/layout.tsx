@@ -1,23 +1,20 @@
-import type { Metadata } from 'next';
-import { Inter, Manrope } from 'next/font/google';
+import { Footer } from '@/components/Footer/Footer';
+import { Manrope } from 'next/font/google';
+import '../(site)/globals.css';
 
-const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 const manrope = Manrope({ subsets: ['latin', 'cyrillic'] });
 
-export const metadata: Metadata = {
-	title: 'Main',
-	description: 'ZULUPooL Web App',
-};
-
-export default function RootLayout({
+export default function Authentication({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
 	return (
 		<html lang="en">
-			<div>Авторизация</div>
-			{children}
+			<body className={manrope.className}>
+				{children}
+				<Footer />
+			</body>
 		</html>
 	);
 }

@@ -24,7 +24,6 @@ export const API = {
 		backendQueryProfitSwitchCoeff:
 			process.env.NEXT_PUBLIC_ADMIN +
 			'/api/backendQueryProfitSwitchCoeff',
-		userLogin: '/api/userLogin',
 	},
 	user: {
 		userGetSettings:
@@ -49,6 +48,7 @@ export const API = {
 			'/api/backendQueryUserStatsHistory',
 		backendQueryFoundBlocks:
 			process.env.NEXT_PUBLIC_DOMAIN + '/api/backendQueryFoundBlocks',
-		userLogin: '/api/userLogin',
+		userLogin: process.env.NEXT_PUBLIC_DOMAIN + '/api/userLogin',
+		userLogout: process.env.NEXT_PUBLIC_DOMAIN + '/api/userLogout',
 	},
 };

@@ -64,8 +64,16 @@
 	border: none;
 	background: none;
 	cursor: pointer;
-	margin-bottom: 25px;
-	padding-right: 5px;
+	width: 24px;
+	height: 24px;
+}
+
+.toggleLanguageButton {
+	border: none;
+	background: none;
+	cursor: pointer;
+	width: 24px;
+	height: 24px;
 }
 
 .toggleThemeButton:hover .themeIcon {
@@ -78,10 +86,9 @@
 	font-size: 32px;
 	color: #fff;
 	margin-bottom: 25px;
-	overflow: hidden;
 }
 
-.loginBtn_collapsed:hover svg {
+.logOutBtn_collapsed:hover svg {
 	fill: var(--primary-blue);
 }
 
@@ -106,7 +113,7 @@
 	white-space: nowrap;
 	width: 100%;
 	padding-bottom: 4px;
-	transition: all 0.5s;
+	transition: all 0.3s;
 }
 
 .isActive {
@@ -136,4 +143,9 @@
 
 .nav__link:hover .nav__icon {
 	color: var(--primary-blue);
+}
+
+.langIcon {
+	width: 24px;
+	height: 24px;
 }

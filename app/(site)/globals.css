@@ -19,8 +19,7 @@ body {
 			rgba(255, 255, 255, 0.5)
 		),
 		url('../../public/background-image.svg');
-	background-size: cover;
-	padding-bottom: 120px;
+	background-size: auto;
 }
 
 html,

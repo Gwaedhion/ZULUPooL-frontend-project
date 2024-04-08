@@ -3,9 +3,43 @@
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
+	margin-bottom: 120px;
 }
 
-.table > [class~='p-panel-header'] {
-	background-color: #07c4e8;
-	color: #ffffff;
+.table {
+	background-color: var(--tertiary-color);
+	transition: all 0.3s;
+}
+
+.table tr td {
+	text-align: center;
+	background-color: var(--tertiary-color);
+}
+
+.table th {
+	height: 40px;
+}
+
+.table th div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.table th:hover {
+	background-image: linear-gradient(
+		to left,
+		var(--primary-blue) 0%,
+		var(--primary-purple) 100%
+	);
+}
+
+.tableColumn {
+	height: 30px;
+}
+
+.table div span {
+	display: flex;
+	align-items: center;
+	padding: 0 10px;
 }
