@@ -8,8 +8,13 @@ import { IHomeApi, IInstance } from '../page.interface';
 import { API } from '@/app/api';
 import CoinButtons from '@/components/CoinButtons/CoinButtons';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
+import en from '../../i18n/en.json';
+import ru from '../../i18n/ru.json';
+import { useRouter } from 'next/navigation';
 
 export default function Info() {
+	const router = useRouter();
+
 	const [apiData, setApiData] = useState<IHomeApi | undefined>({
 		status: 'ok',
 		instances: [],
@@ -46,6 +51,14 @@ export default function Info() {
 		?.map((instance) => instance)
 		.filter((inst) => inst.backends.includes(currentSecondaryCoin?.title));
 
+	const [userLanguage, setUserLanguage] = useState(
+		localStorage.getItem('userLang')
+	);
+
+	useEffect(() => {
+		setUserLanguage(localStorage.getItem('userLang'));
+	}, [userLanguage]);
+
 	return (
 		<div className={styles.pageWrapper}>
 			<ProgressBar />
@@ -55,11 +68,20 @@ export default function Info() {
 				currentMainCoin={currentMainCoin}
 				setCurrentMainCoin={setCurrentMainCoin}
 			/>
+
 			<table className={styles.table}>
 				<thead className={styles.tableHead}>
 					<tr className={styles.tableRow}>
-						<th className={styles.tableHeader}>Protocol</th>
-						<th className={styles.tableHeader}>Type</th>
+						<th className={styles.tableHeader}>
+							{userLanguage == 'en-US'
+								? en['page.info.table.header.protocol']
+								: ru['page.info.table.header.protocol']}
+						</th>
+						<th className={styles.tableHeader}>
+							{userLanguage == 'en-US'
+								? en['page.info.table.header.type']
+								: ru['page.info.table.header.type']}
+						</th>
 						<th className={styles.tableHeader}>Port</th>
 						<th className={styles.tableHeader}>Backends</th>
 						<th className={styles.tableHeader}>Difficulty</th>
@@ -123,6 +145,7 @@ export default function Info() {
 					)}
 				</tbody>
 			</table>
+
 			<div className={styles.serverInfo}>
 				<div className={styles.startWork}>
 					<p className={styles.configureText}>
@@ -159,7 +182,6 @@ export default function Info() {
 					}
 				</div>
 			</div>
-
 			<CoinsInfo currentMainCoin={currentMainCoin} rowData={rowData!} />
 			<Rewards />
 		</div>

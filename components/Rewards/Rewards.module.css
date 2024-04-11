@@ -19,7 +19,6 @@
 .block {
 	background-color: var(--tertiary-color);
 	background-image: url('../../public//rewards-icons/rewards-bg.svg');
-
 	color: var(--default-color);
 	border-radius: 40px;
 	display: flex;

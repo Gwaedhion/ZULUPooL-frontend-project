@@ -22,7 +22,7 @@
 	margin-bottom: 25px;
 	margin-top: 25px;
 	padding-bottom: 25px;
-	border-bottom: 1px solid #241f28;
+	border-bottom: 1px solid #636264;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -32,8 +32,15 @@
 
 .expandIcon {
 	position: absolute;
-	fill: var(--tertiary-color);
 	top: -25px;
+}
+
+.expandIcon_light {
+	fill: var(--tertiary-color);
+}
+
+.expandIcon_dark {
+	fill: var(--default-color);
 }
 
 .sidebarBtn {
@@ -49,11 +56,15 @@
 	fill: var(--primary-blue);
 }
 
+.userIcon {
+	margin-left: -5px;
+}
+
 .homeLink {
 	overflow: hidden;
 }
 .logo {
-	margin-left: -20px;
+	margin-left: -16px;
 }
 
 .container {
@@ -85,7 +96,7 @@
 	font-weight: 400;
 	font-size: 32px;
 	color: #fff;
-	margin-bottom: 25px;
+	margin-bottom: 20px;
 }
 
 .logOutBtn_collapsed:hover svg {
@@ -93,8 +104,9 @@
 }
 
 .nav {
+	margin-top: 25px;
 	list-style-type: none;
-	margin-bottom: 300px;
+	margin-bottom: 225px;
 	width: 100%;
 }
 
@@ -148,4 +160,30 @@
 .langIcon {
 	width: 24px;
 	height: 24px;
+}
+
+.userExpBtnContainer {
+	margin-bottom: 25px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 25px;
+	margin-left: -5px;
+	padding-bottom: 50px;
+	width: 100%;
+	border-bottom: 1px solid #636264;
+}
+
+.toggleThemeButton,
+.toggleLanguageButton {
+	transition: all 0.3s;
+}
+
+.toggleThemeButton:hover {
+	transform: scale(1.2);
+}
+
+.toggleLanguageButton:hover {
+	transform: scale(1.2);
 }

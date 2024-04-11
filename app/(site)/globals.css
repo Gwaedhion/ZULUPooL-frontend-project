@@ -13,19 +13,34 @@
 	margin: 0;
 }
 
-body {
-	background: linear-gradient(
-			rgba(255, 255, 255, 0.5),
-			rgba(255, 255, 255, 0.5)
-		),
-		url('../../public/background-image.svg');
-	background-size: auto;
-}
-
 html,
 body {
-	max-width: 100vw;
 	overflow-x: hidden;
+}
+
+body {
+	margin-bottom: 120px;
+	background-attachment: fixed;
+}
+
+.body_light {
+	background-image: url('../../public/light-bg.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.body_dark {
+	background-image: url('../../public/dark-bg.svg');
+	background-repeat: repeat;
+	background-position: center;
+}
+
+.body_dark p,
+.body_dark h1,
+.body_dark h2,
+.body_dark h3 {
+	color: var(--default-color);
 }
 
 a {

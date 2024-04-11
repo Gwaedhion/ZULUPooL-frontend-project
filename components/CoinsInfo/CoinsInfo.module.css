@@ -15,7 +15,7 @@
 	justify-content: center;
 	align-items: center;
 	width: 100%;
-	margin-bottom: 100px;
+	margin-bottom: 150px;
 }
 
 .coinAlerts__item {
@@ -31,9 +31,6 @@
 
 .coinAlerts__text {
 	max-width: 440px;
-}
-
-.coinAlerts__icon {
 }
 
 .secondaryInfo__text {

@@ -4,9 +4,10 @@ import './globals.css';
 import { Footer } from '../../components/Footer/Footer';
 import { Sidebar } from '../../components/Sidebar/Sidebar';
 import { ContextProvider } from './context';
-import { IuserApiSession } from '../(auth)/auth/auth.interface';
 import cn from 'classnames';
-import styles from './layout.module.css';
+import { useState } from 'react';
+import en from '../i18n/en.json';
+import ru from '../i18n/ru.json';
 
 const manrope = Manrope({ subsets: ['latin', 'cyrillic'] });
 
@@ -15,23 +16,30 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	const userDataToPost: IuserApiSession = {
-		id: sessionStorage?.getItem('sessionId')!,
-		sessionId: sessionStorage?.getItem('sessionId')!,
+	const [lang, setLang] = useState('');
+	const [theme, setTheme] = useState('');
+
+	const handleLangChange = (lang: string) => {
+		setLang(lang);
+	};
+
+	const handleThemeChange = (theme: string) => {
+		setTheme(theme);
 	};
 
 	return (
 		<html lang="en">
 			<body
-				className={cn(manrope.className, styles.body, {
-					[styles.bodyLight]:
-						localStorage.getItem('userTheme') == 'light',
-					[styles.bodyDark]:
-						localStorage.getItem('userTheme') == 'dark',
+				className={cn('body', manrope.className, {
+					['body_light']: theme === 'light',
+					['body_dark']: theme === 'dark',
 				})}
 			>
 				<ContextProvider>
-					<Sidebar />
+					<Sidebar
+						userTheme={handleThemeChange}
+						userLanguage={handleLangChange}
+					/>
 					{children}
 					<Footer />
 				</ContextProvider>

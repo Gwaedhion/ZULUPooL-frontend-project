@@ -16,12 +16,12 @@ import MonitorngIcon from '../../public/sidebar-icons/monitoring.svg';
 import HistoryIcon from '../../public/sidebar-icons/history.svg';
 import PayoutsIcon from '../../public/sidebar-icons/payouts.svg';
 import SettingsIcon from '../../public/sidebar-icons/settings.svg';
+import UserIcon from '../../public/sidebar-icons/user-icon.svg';
 import { usePathname, useRouter } from 'next/navigation';
 import { API } from '@/app/api';
 import axios from 'axios';
 import { IuserApiSession } from '@/app/(auth)/auth/auth.interface';
 import { CircleFlag } from 'react-circle-flags';
-import { Rufina } from 'next/font/google';
 
 const sidebarItems = [
 	{
@@ -65,7 +65,14 @@ const iconsArray = [
 	<SettingsIcon className={styles.nav__icon} key={sidebarItems[5].id} />,
 ];
 
-export const Sidebar = (): JSX.Element => {
+export const Sidebar = ({ userTheme, userLanguage }: any): JSX.Element => {
+	useEffect(() => {
+		if (localStorage.length == 0) {
+			localStorage.setItem('userTheme', 'light');
+			localStorage.setItem('userLang', 'en-US');
+		}
+	});
+
 	const pathname = usePathname();
 
 	const [expanded, setExpanded] = useState(false);
@@ -109,6 +116,10 @@ export const Sidebar = (): JSX.Element => {
 		}
 	});
 
+	const [theme, setTheme] = useState(localStorage.getItem('userTheme')!);
+
+	const [language, setLanguage] = useState(localStorage.getItem('userLang')!);
+
 	const toggleTheme = () => {
 		if (localStorage.getItem('userTheme') == 'light') {
 			localStorage.setItem('userTheme', 'dark');
@@ -129,12 +140,24 @@ export const Sidebar = (): JSX.Element => {
 		}
 	};
 
-	const [theme, setTheme] = useState('light');
-
-	const [language, setLanguage] = useState('en-US');
-
 	const engFlag = () => <CircleFlag countryCode="us" height="24" />;
 	const ruFlag = () => <CircleFlag countryCode="ru" height="24" />;
+
+	const handleUserTheme = (state: string) => {
+		userTheme(state);
+	};
+
+	const handleUserLanguage = (state: string) => {
+		userLanguage(state);
+	};
+
+	useEffect(() => {
+		handleUserTheme(theme);
+	});
+
+	useEffect(() => {
+		handleUserLanguage(language);
+	});
 
 	return (
 		<aside
@@ -142,7 +165,6 @@ export const Sidebar = (): JSX.Element => {
 				[styles.expanded]: expanded,
 				[styles.collapsed]: !expanded,
 			})}
-			onLoad={() => getUserName}
 		>
 			<div className={styles.logoWrapper}>
 				<Link className={styles.homeLink} href="/">
@@ -164,17 +186,30 @@ export const Sidebar = (): JSX.Element => {
 					{expanded ? (
 						<CollapseIcon className={styles.collapseIcon} />
 					) : (
-						<ExpandIcon className={styles.expandIcon} />
+						<ExpandIcon
+							className={cn(styles.expandIcon, {
+								[styles.expandIcon_light]: theme === 'light',
+								[styles.expandIcon_dark]: theme === 'dark',
+							})}
+						/>
 					)}
 				</button>
 			</div>
 
 			{expanded && !userName ? (
-				<span className={styles.userName}>{userName}</span>
+				<span className={styles.userName}>Username</span>
 			) : (
-				<span className={styles.userName}>&nbsp;</span>
+				<span className={styles.userName}>
+					<UserIcon className={styles.userIcon} />
+				</span>
 			)}
 			<div className={styles.userExpBtnContainer}>
+				<button
+					className={styles.toggleLanguageButton}
+					onClick={toggleLanguage}
+				>
+					{language == 'en-US' ? engFlag() : ruFlag()}
+				</button>
 				<button
 					className={styles.toggleThemeButton}
 					onClick={toggleTheme}
@@ -184,13 +219,6 @@ export const Sidebar = (): JSX.Element => {
 					) : (
 						<LightThemeIcon className={styles.themeIcon} />
 					)}
-				</button>
-
-				<button
-					className={styles.toggleLanguageButton}
-					onClick={toggleLanguage}
-				>
-					{language == 'en-US' ? engFlag() : ruFlag()}
 				</button>
 			</div>
 

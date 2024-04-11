@@ -38,12 +38,12 @@ export default function CoinsInfo({
 					<div className={styles.coinAlerts}>
 						<div className={styles.coinAlerts__item}>
 							<CheckIcon className={styles.coinAlerts__icon} />
-							<span>AsicBoost enabled</span>
+							<p>AsicBoost enabled</p>
 						</div>
 						<LineIcon className={styles.decoration__icon} />
 						<div className={styles.coinAlerts__item}>
 							<CheckIcon className={styles.coinAlerts__icon} />
-							<span>Instance is compatible with NiceHash.</span>
+							<p>Instance is compatible with NiceHash.</p>
 						</div>
 						<LineIcon className={styles.decoration__icon} />
 
