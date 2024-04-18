@@ -1,4 +1,141 @@
 {
-	"page.info.table.header.protocol": "Protocol",
-	"page.info.table.header.type": "Type"
+	"info": {
+		"table": {
+			"header.protocol": "Protocol",
+			"header.type": "Type",
+			"header.port": "Port",
+			"header.backends": "Backends",
+			"header.difficulty": "Difficulty"
+		},
+		"serverInfo": { "username": "Username", "password": "Password" },
+		"coinsInfo": {
+			"jobSwitch": "Fast job switch! This backend, as the main one, uses a fast blockchain:",
+			"perfomanceWarning": "This negatively affects device performance and the number of rejects.",
+			"AsicBoost": "AsicBoost enabled",
+			"NiceHashCompatible": "Instance is compatible with NiceHash.",
+			"NiceHashNotCompatible": "Unfortunately, instance is not compatible with NiceHash.",
+			"MiningrigrentalsIncompatible": "Unfortunately, instance is not compatible with some Miningrigrentals rigs. You can use them at your own risk.",
+			"payments": "Payments",
+			"recievePayments": "To receive payments, you need to configure the addresses and the threshold for payments for all backends which you are connecting to. There is no way to choose a particular coin for mining: switching between coins presented on the backend happens automatically based on our algo. In the case of Merged coins, mining is performed using all algorithms compatible with the presented merged coin.",
+			"supportInformation": "Support Information"
+		},
+		"rewards": {
+			"rewardsTitle": "Rewards",
+			"rewardsSubtitle": "You can work in PPDALN+ mode",
+			"subtitleDescription": "PPDALN+ (Pay Per Difficulty Accepted for Last N rounds + fee)"
+		}
+	},
+	"pool-stats": {
+		"table": {
+			"header.date": "Date",
+			"header.shareRate": "Share rate (share/s)",
+			"header.hashrate": "Hashrate",
+			"header.difficulty": "Accepted difficulty (M)"
+		}
+	},
+	"payouts": {
+		"table": {
+			"header.date": "Date",
+			"header.TXid": "TXid",
+			"header.amount": "Amount"
+		}
+	},
+	"history": {
+		"table": {
+			"header.date": "Date",
+			"header.shareRate": "Share rate (share/s)",
+			"header.hashrate": "Hashrate",
+			"header.difficulty": "Accepted difficulty (M)"
+		}
+	},
+	"settings": {
+		"payment-settings-form": {
+			"settings": {
+				"paymentSettings": {
+					"title": "Payment Settings",
+					"paymentAddress": "Payment address",
+					"automaticPayoutThreshold": "Automatic payout threshold",
+					"autoPayoutEnabled": "Auto payout enabled",
+					"savePaymentSettings": "Save Payment Settings",
+					"example": "An example of supported address formats and minimal allowed payout for"
+				},
+				"accountSettings": {
+					"title": "Account Settings",
+					"email": "e-mail",
+					"authentication": "Two factor authentication",
+					"registerDate": "Registration date:",
+					"publicName": "Public name",
+					"savePublicName": "Save public name"
+				}
+			},
+			"coins": {
+				"sha256": {
+					"BTC": {
+						"P2PKH": "13xDZX65TFmeFgowMJsJvutmSxUttwkE3f",
+						"P2SH": "3H28N5WuREZ93CNmhWcRcrnykWrMqkhFyWN",
+						"Bech32": "bc1uf5tdn87k2uz7r2kl5zrfww362ch3746lq5vse7"
+					},
+					"BCHN": {
+						"P2PKH": "13xDZX65TFmeFgowMJsJvutmSxUttwkE3f",
+						"Bech32": "qqsxr824tvsq72tv7x43xa346zn7f78pkqssr5lavh"
+					},
+					"BSV": {
+						"P2PKH": "13xDZX65TFmeFgowMJsJvutmSxUttwkE3f"
+					},
+					"DGB.sha256": {
+						"P2PKH": "DSMvc9BbM8vtrjPSpMaXmQVXWZsgA92Wxc",
+						"P2SH": "SRsJzf5XL19LDff1paPzRB6p6Va6NmW8Pc",
+						"Bech32": "dgb1q5d0dypakqz326jhuqzsspdkys0dxs5ztckrtl9"
+					},
+					"HTR": {
+						"P2PKH": "HTjxTEAUSwZf34nK4YuicfDPocT7JsQwJi"
+					},
+					"XEC": {
+						"P2PKH": "13xDZX65TFmeFgowMJsJvutmSxUttwkE3f",
+						"Bech32": "qqsxr824tvsq72tv7x43xa346zn7f78pkqfahly82q"
+					}
+				},
+				"odocrypt": {
+					"DGB.odo": {
+						"P2PKH": "DSMvc9BbM8vtrjPSpMaXmQVXWZsgA92Wxc",
+						"P2SH": "SRsJzf5XL19LDff1paPzRB6p6Va6NmW8Pc",
+						"Bech32": "dgb1q5d0dypakqz326jhuqzsspdkys0dxs5ztckrtl9"
+					}
+				},
+				"qubit": {
+					"DGB.qubit": {
+						"P2PKH": "DSMvc9BbM8vtrjPSpMaXmQVXWZsgA92Wxc",
+						"P2SH": "SRsJzf5XL19LDff1paPzRB6p6Va6NmW8Pc",
+						"Bech32": "dgb1q5d0dypakqz326jhuqzsspdkys0dxs5ztckrtl9"
+					}
+				},
+				"scrypt": {
+					"LTC": {
+						"P2PKH": "LcgdQuT7TPbo5X2qSfTi4Kbvov3p1uzeAK",
+						"P2SH": "MKYXKMckKUgYX1tTPuEjLtGQ6jiBXhpf39"
+					},
+					"DGB.scrypt": {
+						"P2PKH": "DSMvc9BbM8vtrjPSpMaXmQVXWZsgA92Wxc",
+						"P2SH": "SRsJzf5XL19LDff1paPzRB6p6Va6NmW8Pc",
+						"Bech32": "dgb1q5d0dypakqz326jhuqzsspdkys0dxs5ztckrtl9"
+					},
+					"DOGE": {
+						"P2PKH": "DMHMEs1KBhFPuVtwUTCGTtJQSuCmyETxVH"
+					}
+				},
+				"skein": {
+					"DGB.skein": {
+						"P2PKH": "DSMvc9BbM8vtrjPSpMaXmQVXWZsgA92Wxc",
+						"P2SH": "SRsJzf5XL19LDff1paPzRB6p6Va6NmW8Pc",
+						"Bech32": "dgb1q5d0dypakqz326jhuqzsspdkys0dxs5ztckrtl9"
+					}
+				},
+				"PrimePOW": {
+					"XPM": {
+						"P2PKH": "AZ6QziuQaHDZkwWr125jSJcs23s7PjgzRb"
+					}
+				}
+			}
+		}
+	}
 }

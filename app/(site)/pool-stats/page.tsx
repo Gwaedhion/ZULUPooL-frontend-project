@@ -1,7 +1,7 @@
 'use client';
 import styles from './page.module.css';
 import CoinButtons from '@/components/CoinButtons/CoinButtons';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { API } from '@/app/api';
 import { IStatisticsData, IStatisticsResponse } from './page.props';
@@ -9,6 +9,8 @@ import ProgressBar from '@/components/ProgressBar/ProgressBar';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import 'primereact/resources/themes/lara-dark-indigo/theme.css';
+import en from '../../i18n/en.json';
+import ru from '../../i18n/ru.json';
 
 export default function Info(): JSX.Element {
 	const [currentMainCoin, setCurrentMainCoin] = useState({
@@ -45,6 +47,25 @@ export default function Info(): JSX.Element {
 
 	const dataInitial: IStatisticsData[] | undefined = apiData?.stats;
 
+	const [userLanguage, setUserLanguage] = useState(
+		localStorage.getItem('userLang')
+	);
+
+	useEffect(() => {
+		setUserLanguage(localStorage.getItem('userLang'));
+	}, [userLanguage]);
+
+	const refLang = useRef(en);
+
+	useEffect(() => {
+		if (userLanguage == 'en-US') {
+			refLang.current = en;
+		}
+		if (userLanguage == 'ru-RU') {
+			refLang.current = ru;
+		}
+	}, [userLanguage]);
+
 	return (
 		<div className={styles.pageWrapper}>
 			<ProgressBar />
@@ -68,7 +89,7 @@ export default function Info(): JSX.Element {
 				<Column
 					className={styles.tableColumn}
 					field={'time'}
-					header={'Date'}
+					header={`${refLang.current['pool-stats'].table['header.date']}`}
 					sortable
 					body={(rowData) => (
 						<>
@@ -86,13 +107,13 @@ export default function Info(): JSX.Element {
 				<Column
 					className={styles.tableColumn}
 					field={'shareRate'}
-					header={'Share rate (share/s)'}
+					header={`${refLang.current['pool-stats'].table['header.shareRate']}`}
 					sortable
 				/>
 				<Column
 					className={styles.tableColumn}
 					field={'power'}
-					header={'Hashrate'}
+					header={`${refLang.current['pool-stats'].table['header.hashrate']}`}
 					sortable
 					body={(rowData) => (
 						<>
@@ -126,7 +147,7 @@ export default function Info(): JSX.Element {
 				<Column
 					className={styles.tableColumn}
 					field={'shareWork'}
-					header={'Accepted difficulty (M)'}
+					header={`${refLang.current['pool-stats'].table['header.difficulty']}`}
 					sortable
 					body={(rowData) =>
 						rowData.shareWork > 0

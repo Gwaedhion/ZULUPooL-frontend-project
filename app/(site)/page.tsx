@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const inter = Inter({ subsets: ['latin', 'cyrillic'] });
 
-export default function Home() {
+export default async function Home() {
 	return (
 		<main className={styles.pageWrapper}>
 			<Link href="/auth">

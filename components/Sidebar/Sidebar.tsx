@@ -2,14 +2,14 @@
 import styles from './Sidebar.module.css';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/Button/Button';
+import cn from 'classnames';
 import DarkThemeIcon from './dark-mode.svg';
 import LightThemeIcon from './light-mode.svg';
 import LoginIcon from '../../public/sidebar-icons/log-in.svg';
 import CollapseIcon from '../../public/sidebar-icons/collapse.svg';
 import ExpandIcon from '../../public/sidebar-icons/expand.svg';
-import { useEffect, useState } from 'react';
-import cn from 'classnames';
 import PoolHistoryIcon from '../../public/sidebar-icons/pool-history.svg';
 import RewardsIcon from '../../public/sidebar-icons/info.svg';
 import MonitorngIcon from '../../public/sidebar-icons/monitoring.svg';
@@ -17,9 +17,9 @@ import HistoryIcon from '../../public/sidebar-icons/history.svg';
 import PayoutsIcon from '../../public/sidebar-icons/payouts.svg';
 import SettingsIcon from '../../public/sidebar-icons/settings.svg';
 import UserIcon from '../../public/sidebar-icons/user-icon.svg';
+import axios from 'axios';
 import { usePathname, useRouter } from 'next/navigation';
 import { API } from '@/app/api';
-import axios from 'axios';
 import { IuserApiSession } from '@/app/(auth)/auth/auth.interface';
 import { CircleFlag } from 'react-circle-flags';
 
@@ -151,6 +151,11 @@ export const Sidebar = ({ userTheme, userLanguage }: any): JSX.Element => {
 		userLanguage(state);
 	};
 
+	const handleLanguageChange = () => {
+		toggleLanguage();
+		router.refresh();
+	};
+
 	useEffect(() => {
 		handleUserTheme(theme);
 	});
@@ -206,7 +211,7 @@ export const Sidebar = ({ userTheme, userLanguage }: any): JSX.Element => {
 			<div className={styles.userExpBtnContainer}>
 				<button
 					className={styles.toggleLanguageButton}
-					onClick={toggleLanguage}
+					onClick={handleLanguageChange}
 				>
 					{language == 'en-US' ? engFlag() : ruFlag()}
 				</button>

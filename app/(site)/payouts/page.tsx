@@ -1,6 +1,6 @@
 'use client';
 import styles from './page.module.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import CoinButtons from '@/components/CoinButtons/CoinButtons';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -8,6 +8,8 @@ import axios from 'axios';
 import { API } from '@/app/api';
 import { IUserPayoutsPayload, IUserPayoutsResponse } from './payouts.props';
 import 'primereact/resources/themes/lara-dark-indigo/theme.css';
+import en from '../../i18n/en.json';
+import ru from '../../i18n/ru.json';
 
 export default function Info() {
 	const [currentMainCoin, setCurrentMainCoin] = useState({
@@ -28,17 +30,39 @@ export default function Info() {
 		timeFrom: 0,
 	};
 
-	const [apiData, setApiData] = useState<IUserPayoutsResponse>();
+	const [apiData, setApiData] = useState([]);
 
 	const getPayoutsData = async () => {
 		await axios
 			.post(API.user.backendQueryPayouts, JSON.stringify(dataToPost))
-			.then((res) => setApiData(res.data.payouts));
+			.then((res) => {
+				setApiData(res.data.payouts);
+				console.log(apiData);
+			});
 	};
 
 	useEffect(() => {
 		getPayoutsData();
 	}, [currentSecondaryCoin]);
+
+	const [userLanguage, setUserLanguage] = useState(
+		localStorage.getItem('userLang')
+	);
+
+	useEffect(() => {
+		setUserLanguage(localStorage.getItem('userLang'));
+	}, [userLanguage]);
+
+	const refLang = useRef(en);
+
+	useEffect(() => {
+		if (userLanguage == 'en-US') {
+			refLang.current = en;
+		}
+		if (userLanguage == 'ru-RU') {
+			refLang.current = ru;
+		}
+	}, [userLanguage]);
 
 	return (
 		<div className={styles.pageWrapper}>
@@ -55,24 +79,24 @@ export default function Info() {
 				rowsPerPageOptions={[20, 50, 100, 200, 500, 1000]}
 				totalRecords={1000}
 				showGridlines
-				value={apiData?.payouts}
+				value={apiData}
 			>
 				<Column
 					className={styles.tableColumn}
 					field="time"
-					header="Date"
+					header={`${refLang.current.payouts.table['header.date']}`}
 					sortable
 				></Column>
 				<Column
 					className={styles.tableColumn}
 					field="txid"
-					header="TXid"
+					header={`${refLang.current.payouts.table['header.TXid']}`}
 					sortable
 				></Column>
 				<Column
 					className={styles.tableColumn}
 					field="value"
-					header="Amount"
+					header={`${refLang.current.payouts.table['header.amount']}`}
 					sortable
 				></Column>
 			</DataTable>

@@ -1,4 +1,73 @@
 {
-	"page.info.table.header.protocol": "Протокол",
-	"page.info.table.header.type": "Тип"
+	"info": {
+		"table": {
+			"header.protocol": "Протокол",
+			"header.type": "Тип",
+			"header.port": "Порт",
+			"header.backends": "Бэкенды",
+			"header.difficulty": "Сложность"
+		},
+		"serverInfo": { "username": "Имя пользователя", "password": "Пароль" },
+		"coinsInfo": {
+			"jobSwitch": "Быстрая смена заданий! Этот бекэкнд, в качестве основной, используют монету с быстрым блокчейном:",
+			"perfomanceWarning": "Это негативно сказывается на производительности устройств и количестве отклонённых заданий.",
+			"AsicBoost": "AsicBoost активирован",
+			"NiceHashCompatible": "Инстанс совместим с NiceHash.",
+			"NiceHashNotCompatible": "К сожалению, инстанс не совместим с NiceHash.",
+			"MiningrigrentalsIncompatible": "К сожалению, инстанс совместим не со всеми Miningrigrentals ригами. Вы можете использовать его на свой страх и риск.",
+			"payments": "Выплаты",
+			"recievePayments": "Для получения выплат, Вам необходимо настроить адреса и порог выплат для всех монет инстанса к которому Вы подключаетесь. Нет пути выбрать какую-то отдельную монету для добычи. Переключение между монетами представленными на бэкенде происходит автоматически на основе нашего алгоритма. В случае Merged-монет - добыча производится на всех совместимых с представленной merged-монетой алгоритмах.",
+			"supportInformation": "Техническая поддержка"
+		},
+		"rewards": {
+			"rewardsTitle": "Вознаграждения",
+			"rewardsSubtitle": "Вы можете работать в режиме PPDALN+",
+			"subtitleDescription": "PPDALN+ (Pay Per Difficulty Accepted for Last N rounds + fee) (оплата за выполненную работу за последние N раундов + TX комиссии)"
+		}
+	},
+	"pool-stats": {
+		"table": {
+			"header.date": "Дата",
+			"header.shareRate": "Шарарейт (share/s)",
+			"header.hashrate": "Хешрэйт",
+			"header.difficulty": "Выполненная работа (М)"
+		}
+	},
+	"payouts": {
+		"table": {
+			"header.date": "Дата",
+			"header.TXid": "TXid",
+			"header.amount": "Сумма"
+		}
+	},
+	"history": {
+		"table": {
+			"header.date": "Дата",
+			"header.shareRate": "Шарарейт (share/s)",
+			"header.hashrate": "Хешрэйт",
+			"header.difficulty": "Выполненная работа (М)"
+		}
+	},
+	"settings": {
+		"payment-settings-form": {
+			"settings": {
+				"paymentSettings": {
+					"title": "Настройки платежей",
+					"paymentAddress": "Адрес",
+					"automaticPayoutThreshold": "Сумма для автовыплаты",
+					"autoPayoutEnabled": "Авто-выплаты",
+					"savePaymentSettings": "Сохранить настройки выплат",
+					"example": "Пример поддерживаемых форматов адресов и размера минимальной выплаты для"
+				},
+				"accountSettings": {
+					"title": "Настройки аккаунта",
+					"email": "Электронная почта",
+					"authentication": "Двухфакторная аутентификация",
+					"registerDate": "Дата регистрации:",
+					"publicName": "Публичное имя",
+					"savePublicName": "Сохранить публичное имя"
+				}
+			}
+		}
+	}
 }

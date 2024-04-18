@@ -24,16 +24,11 @@ body {
 }
 
 .body_light {
-	background-image: url('../../public/light-bg.svg');
-	background-repeat: no-repeat;
-	background-position: center;
-	background-size: cover;
+	background-color: #fff;
 }
 
 .body_dark {
-	background-image: url('../../public/dark-bg.svg');
-	background-repeat: repeat;
-	background-position: center;
+	background-color: #23242e;
 }
 
 .body_dark p,

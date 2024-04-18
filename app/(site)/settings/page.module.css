@@ -1,6 +1,76 @@
 .pageWrapper {
-	max-width: 1440px;
-	width: 100%;
+	height: 100vh;
 	margin-left: auto;
 	margin-right: auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	transition: all 1s;
+	margin-top: 40px;
+}
+
+.settingsContainer {
+	display: flex;
+	gap: 100px;
+}
+
+.settingsTitle_active {
+	transition: all 0.3s;
+	color: var(--primary-blue);
+}
+
+.settingsAccountOption,
+.settingsPaymentOption {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+}
+
+.settingsButton {
+	width: 30px;
+	border: none;
+	background: transparent;
+	cursor: pointer;
+}
+
+.settingsButton:hover svg {
+	transition: all 0.3s;
+	transform: scale(1.2);
+}
+
+.settingsIcon_active {
+	fill: var(--primary-blue);
+}
+
+.settingsBox {
+	animation: blur-in 0.4s linear both;
+}
+@keyframes blur-in {
+	0% {
+		filter: blur(12px);
+		opacity: 0;
+	}
+	100% {
+		filter: blur(0);
+		opacity: 1;
+	}
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.formButton {
+	padding: 5px 10px;
+}
+
+.formInput {
+	width: 530px;
+	font-size: 18px;
+	padding: 5px 10px;
 }

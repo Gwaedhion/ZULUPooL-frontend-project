@@ -3,32 +3,50 @@ import CheckIcon from '../../public/homepage-icons/check-icon.svg';
 import WarningIcon from '../../public/homepage-icons/warning-icon.svg';
 import LineIcon from '../../public/homepage-icons/line-decoration.svg';
 import { ICurrentState } from '@/app/(site)/page.interface';
+import { useEffect, useRef, useState } from 'react';
+import ru from '../../app/i18n/ru.json';
+import en from '../../app/i18n/en.json';
 
 export default function CoinsInfo({
 	currentMainCoin,
 	rowData,
 }: ICurrentState): JSX.Element {
+	const [userLanguage, setUserLanguage] = useState(
+		localStorage.getItem('userLang')
+	);
+
+	useEffect(() => {
+		setUserLanguage(localStorage.getItem('userLang'));
+	}, [userLanguage]);
+
+	const refLang = useRef(en);
+
+	useEffect(() => {
+		if (userLanguage == 'en-US') {
+			refLang.current = en;
+		}
+		if (userLanguage == 'ru-RU') {
+			refLang.current = ru;
+		}
+	}, [userLanguage]);
+
 	return (
 		<div>
 			{rowData?.port == 5002 && (
 				<div className={styles.portWarning}>
 					<p className={styles.portWarningText}>
-						Fast job switch! This backend, as the main one, uses a
-						fast blockchain:{' '}
-						{<span className={styles.textCoins}>DGB.sha256</span>}.
-						This negatively affects device performance and the
-						number of rejects.
+						{refLang.current.info.coinsInfo.jobSwitch}{' '}
+						{<span className={styles.textCoins}>DGB.sha256</span>}.{' '}
+						{refLang.current.info.coinsInfo.perfomanceWarning}
 					</p>
 				</div>
 			)}
 			{rowData?.port == 5012 && (
 				<div className={styles.portWarning}>
 					<p className={styles.portWarningText}>
-						Fast job switch! This backend, as the main one, uses a
-						fast blockchain:{' '}
-						{<span className={styles.textCoins}>DGB.scrypt</span>}.
-						This negatively affects device performance and the
-						number of rejects.
+						{refLang.current.info.coinsInfo.jobSwitch}{' '}
+						{<span className={styles.textCoins}>DGB.scrypt</span>}.{' '}
+						{refLang.current.info.coinsInfo.perfomanceWarning}
 					</p>
 				</div>
 			)}
@@ -38,21 +56,27 @@ export default function CoinsInfo({
 					<div className={styles.coinAlerts}>
 						<div className={styles.coinAlerts__item}>
 							<CheckIcon className={styles.coinAlerts__icon} />
-							<p>AsicBoost enabled</p>
+							<p>{refLang.current.info.coinsInfo.AsicBoost}</p>
 						</div>
 						<LineIcon className={styles.decoration__icon} />
 						<div className={styles.coinAlerts__item}>
 							<CheckIcon className={styles.coinAlerts__icon} />
-							<p>Instance is compatible with NiceHash.</p>
+							<p>
+								{
+									refLang.current.info.coinsInfo
+										.NiceHashCompatible
+								}
+							</p>
 						</div>
 						<LineIcon className={styles.decoration__icon} />
 
 						<div className={styles.coinAlerts__item}>
 							<WarningIcon className={styles.coinAlerts__icon} />
 							<p className={styles.coinAlerts__text}>
-								Unfortunately, instance is not compatible with
-								some Miningrigrentals rigs. You can use them at
-								your own risk.
+								{
+									refLang.current.info.coinsInfo
+										.MiningrigrentalsIncompatible
+								}
 							</p>
 						</div>
 					</div>
@@ -62,8 +86,10 @@ export default function CoinsInfo({
 						<div className={styles.coinAlerts__item}>
 							<WarningIcon className={styles.coinAlerts__icon} />
 							<p className={styles.coinAlerts__text}>
-								Unfortunately, instance is not compatible with
-								NiceHash.
+								{
+									refLang.current.info.coinsInfo
+										.NiceHashNotCompatible
+								}
 							</p>
 						</div>
 						<LineIcon className={styles.decoration__icon} />
@@ -71,9 +97,10 @@ export default function CoinsInfo({
 						<div className={styles.coinAlerts__item}>
 							<WarningIcon className={styles.coinAlerts__icon} />
 							<p className={styles.coinAlerts__text}>
-								Unfortunately, instance is not compatible with
-								some Miningrigrentals rigs. You can use them at
-								your own risk.
+								{
+									refLang.current.info.coinsInfo
+										.MiningrigrentalsIncompatible
+								}
 							</p>
 						</div>
 					</div>
@@ -83,8 +110,10 @@ export default function CoinsInfo({
 						<div className={styles.coinAlerts__item}>
 							<WarningIcon className={styles.coinAlerts__icon} />
 							<p className={styles.coinAlerts__text}>
-								Unfortunately, instance is not compatible with
-								NiceHash.
+								{
+									refLang.current.info.coinsInfo
+										.NiceHashNotCompatible
+								}
 							</p>
 						</div>
 						<LineIcon className={styles.decoration__icon} />
@@ -92,9 +121,10 @@ export default function CoinsInfo({
 						<div className={styles.coinAlerts__item}>
 							<WarningIcon className={styles.coinAlerts__icon} />
 							<p className={styles.coinAlerts__text}>
-								Unfortunately, instance is not compatible with
-								some Miningrigrentals rigs. You can use them at
-								your own risk.
+								{
+									refLang.current.info.coinsInfo
+										.MiningrigrentalsIncompatible
+								}
 							</p>
 						</div>
 					</div>
@@ -103,16 +133,22 @@ export default function CoinsInfo({
 					<div className={styles.coinAlerts}>
 						<div className={styles.coinAlerts__item}>
 							<CheckIcon className={styles.coinAlerts__icon} />
-							<span>Instance is compatible with NiceHash.</span>
+							<span>
+								{
+									refLang.current.info.coinsInfo
+										.NiceHashCompatible
+								}
+							</span>
 						</div>
 						<LineIcon className={styles.decoration__icon} />
 
 						<div className={styles.coinAlerts__item}>
 							<WarningIcon className={styles.coinAlerts__icon} />
 							<p className={styles.coinAlerts__text}>
-								Unfortunately, instance is not compatible with
-								some Miningrigrentals rigs. You can use them at
-								your own risk.
+								{
+									refLang.current.info.coinsInfo
+										.MiningrigrentalsIncompatible
+								}
 							</p>
 						</div>
 					</div>
@@ -122,8 +158,10 @@ export default function CoinsInfo({
 						<div className={styles.coinAlerts__item}>
 							<WarningIcon className={styles.coinAlerts__icon} />
 							<p className={styles.coinAlerts__text}>
-								Unfortunately, instance is not compatible with
-								NiceHash.
+								{
+									refLang.current.info.coinsInfo
+										.NiceHashNotCompatible
+								}
 							</p>
 						</div>
 						<LineIcon className={styles.decoration__icon} />
@@ -131,9 +169,10 @@ export default function CoinsInfo({
 						<div className={styles.coinAlerts__item}>
 							<WarningIcon className={styles.coinAlerts__icon} />
 							<p className={styles.coinAlerts__text}>
-								Unfortunately, instance is not compatible with
-								some Miningrigrentals rigs. You can use them at
-								your own risk.
+								{
+									refLang.current.info.coinsInfo
+										.MiningrigrentalsIncompatible
+								}
 							</p>
 						</div>
 					</div>
@@ -143,7 +182,10 @@ export default function CoinsInfo({
 						<div className={styles.coinAlerts__item}>
 							<CheckIcon className={styles.coinAlerts__icon} />
 							<p className={styles.coinAlerts__text}>
-								Instance is compatible with NiceHash.
+								{
+									refLang.current.info.coinsInfo
+										.NiceHashCompatible
+								}
 							</p>
 						</div>
 						<LineIcon className={styles.decoration__icon} />
@@ -151,9 +193,10 @@ export default function CoinsInfo({
 						<div className={styles.coinAlerts__item}>
 							<WarningIcon className={styles.coinAlerts__icon} />
 							<p className={styles.coinAlerts__text}>
-								Unfortunately, instance is not compatible with
-								some Miningrigrentals rigs. You can use them at
-								your own risk.
+								{
+									refLang.current.info.coinsInfo
+										.MiningrigrentalsIncompatible
+								}
 							</p>
 						</div>
 					</div>
@@ -162,47 +205,66 @@ export default function CoinsInfo({
 				<div className={styles.secondaryInfoWrapper}>
 					<div className={styles.secondaryInfo__payments}>
 						<h1 className={styles.secondaryInfo__title}>
-							Payments
+							{refLang.current.info.coinsInfo.payments}
 						</h1>
 						<p className={styles.secondaryInfo__text}>
-							To receive payments, you need to configure the
-							addresses and the threshold for payments for all
-							backends which you are connecting to. There is no
-							way to choose a particular coin for mining:
-							switching between coins presented on the backend
-							happens automatically based on our algo. In the case
-							of Merged coins, mining is performed using all
-							algorithms compatible with the presented merged
-							coin.
+							{refLang.current.info.coinsInfo.recievePayments}
 						</p>
 					</div>
 					<div className={styles.secondaryInfo__support}>
 						<h1 className={styles.secondaryInfo__title}>
 							Support Information
 						</h1>
-						<p className={styles.secondaryInfo__text}>
-							You can get support in{' '}
-							<a
-								className={styles.secondaryInfo__link}
-								href="https://discord.com/invite/ugsST2BptA"
-							>
-								Discord
-							</a>
-							, or by email:{' '}
-							<button
-								className={styles.copyToClipboardButton}
-								onClick={() => {
-									navigator.clipboard.writeText(
-										'pool@jsoncrypto.com'
-									);
-									alert(
-										'E-mail address copied to clipboard!'
-									);
-								}}
-							>
-								pool@jsoncrypto.com
-							</button>
-						</p>
+						{userLanguage == 'en-US' && (
+							<p className={styles.secondaryInfo__text}>
+								You can get support in{' '}
+								<a
+									className={styles.secondaryInfo__link}
+									href="https://discord.com/invite/ugsST2BptA"
+								>
+									Discord
+								</a>
+								, or by email:{' '}
+								<button
+									className={styles.copyToClipboardButton}
+									onClick={() => {
+										navigator.clipboard.writeText(
+											'pool@jsoncrypto.com'
+										);
+										alert(
+											'E-mail address copied to clipboard!'
+										);
+									}}
+								>
+									pool@jsoncrypto.com
+								</button>
+							</p>
+						)}
+						{userLanguage == 'ru-RU' && (
+							<p className={styles.secondaryInfo__text}>
+								Вы можете получить поддержку в нашем канале{' '}
+								<a
+									className={styles.secondaryInfo__link}
+									href="https://discord.com/invite/ugsST2BptA"
+								>
+									Дискорда
+								</a>
+								, или по электронной почте:{' '}
+								<button
+									className={styles.copyToClipboardButton}
+									onClick={() => {
+										navigator.clipboard.writeText(
+											'pool@jsoncrypto.com'
+										);
+										alert(
+											'Адрес электронной почты был скопирован!'
+										);
+									}}
+								>
+									pool@jsoncrypto.com
+								</button>
+							</p>
+						)}
 					</div>
 				</div>
 			</div>

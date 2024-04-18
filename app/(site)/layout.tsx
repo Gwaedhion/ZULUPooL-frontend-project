@@ -6,8 +6,6 @@ import { Sidebar } from '../../components/Sidebar/Sidebar';
 import { ContextProvider } from './context';
 import cn from 'classnames';
 import { useState } from 'react';
-import en from '../i18n/en.json';
-import ru from '../i18n/ru.json';
 
 const manrope = Manrope({ subsets: ['latin', 'cyrillic'] });
 

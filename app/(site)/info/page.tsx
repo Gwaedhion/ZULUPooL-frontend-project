@@ -2,15 +2,15 @@
 import styles from './page.module.css';
 import Rewards from '@/components/Rewards/Rewards';
 import CoinsInfo from '@/components/CoinsInfo/CoinsInfo';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { IHomeApi, IInstance } from '../page.interface';
 import { API } from '@/app/api';
 import CoinButtons from '@/components/CoinButtons/CoinButtons';
 import ProgressBar from '@/components/ProgressBar/ProgressBar';
-import en from '../../i18n/en.json';
-import ru from '../../i18n/ru.json';
 import { useRouter } from 'next/navigation';
+import ru from '../../i18n/ru.json';
+import en from '../../i18n/en.json';
 
 export default function Info() {
 	const router = useRouter();
@@ -59,6 +59,17 @@ export default function Info() {
 		setUserLanguage(localStorage.getItem('userLang'));
 	}, [userLanguage]);
 
+	const refLang = useRef(en);
+
+	useEffect(() => {
+		if (userLanguage == 'en-US') {
+			refLang.current = en;
+		}
+		if (userLanguage == 'ru-RU') {
+			refLang.current = ru;
+		}
+	}, [userLanguage]);
+
 	return (
 		<div className={styles.pageWrapper}>
 			<ProgressBar />
@@ -73,18 +84,20 @@ export default function Info() {
 				<thead className={styles.tableHead}>
 					<tr className={styles.tableRow}>
 						<th className={styles.tableHeader}>
-							{userLanguage == 'en-US'
-								? en['page.info.table.header.protocol']
-								: ru['page.info.table.header.protocol']}
+							{refLang.current.info.table['header.protocol']}
 						</th>
 						<th className={styles.tableHeader}>
-							{userLanguage == 'en-US'
-								? en['page.info.table.header.type']
-								: ru['page.info.table.header.type']}
+							{refLang.current.info.table['header.port']}
 						</th>
-						<th className={styles.tableHeader}>Port</th>
-						<th className={styles.tableHeader}>Backends</th>
-						<th className={styles.tableHeader}>Difficulty</th>
+						<th className={styles.tableHeader}>
+							{refLang.current.info.table['header.type']}
+						</th>
+						<th className={styles.tableHeader}>
+							{refLang.current.info.table['header.backends']}
+						</th>
+						<th className={styles.tableHeader}>
+							{refLang.current.info.table['header.difficulty']}
+						</th>
 					</tr>
 				</thead>
 				<tbody className={styles.tableBody}>
@@ -148,13 +161,26 @@ export default function Info() {
 
 			<div className={styles.serverInfo}>
 				<div className={styles.startWork}>
-					<p className={styles.configureText}>
-						To start work with{' '}
-						<span className={styles.textCoins}>
-							{rowData?.backends.join(', ')}
-						</span>{' '}
-						coins, configure your device to connect to our server:
-					</p>
+					{userLanguage == 'en-US' && (
+						<p className={styles.configureText}>
+							To start work with{' '}
+							<span className={styles.textCoins}>
+								{rowData?.backends.join(', ')}
+							</span>{' '}
+							coins, configure your device to connect to our
+							server:
+						</p>
+					)}
+					{userLanguage == 'ru-RU' && (
+						<p className={styles.configureText}>
+							Чтобы начать работать c монетами{' '}
+							<span className={styles.textCoins}>
+								{rowData?.backends.join(', ')}
+							</span>{' '}
+							- настройте своё устройство на подключение к нашему
+							серверу:
+						</p>
+					)}
 				</div>
 
 				<div className={styles.serverText}>
@@ -167,7 +193,7 @@ export default function Info() {
 					{
 						<div>
 							<span className={styles.userInfoCoins}>
-								Username:
+								{refLang.current.info.serverInfo.username}:
 							</span>{' '}
 							dvl_d1e2n3i.any-worker-name-required
 						</div>
@@ -175,8 +201,8 @@ export default function Info() {
 					{
 						<div>
 							<span className={styles.userInfoCoins}>
-								Password:
-							</span>
+								{refLang.current.info.serverInfo.password}:
+							</span>{' '}
 							{'<not-an-empty-field-required>'}
 						</div>
 					}
