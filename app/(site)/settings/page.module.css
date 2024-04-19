@@ -14,9 +14,19 @@
 	gap: 100px;
 }
 
-.settingsTitle_active {
+.settingsTitle {
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.settingsTitle_activeBlue {
 	transition: all 0.3s;
 	color: var(--primary-blue);
+}
+
+.settingsTitle_activePurple {
+	transition: all 0.3s;
+	color: var(--primary-purple);
 }
 
 .settingsAccountOption,
@@ -29,19 +39,35 @@
 }
 
 .settingsButton {
-	width: 30px;
 	border: none;
 	background: transparent;
 	cursor: pointer;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 10px;
 }
 
-.settingsButton:hover svg {
+.settingsButton:hover {
 	transition: all 0.3s;
-	transform: scale(1.2);
+	transform: scale(1.1);
 }
 
-.settingsIcon_active {
+.settingsButton_active {
+	transform: scale(1.1);
+}
+
+.settingsIcon {
+	width: 30px;
+	transition: all 0.3s;
+}
+
+.settingsIcon_activeBlue {
 	fill: var(--primary-blue);
+}
+
+.settingsIcon_activePurple {
+	fill: var(--primary-purple);
 }
 
 .settingsBox {
@@ -58,19 +84,63 @@
 	}
 }
 
+.settingsBox {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
 .form {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	margin-top: 50px;
+	padding: 60px 40px;
+	border: 1px solid var(--primary-blue);
+	width: 525px;
 }
 
 .formButton {
 	padding: 5px 10px;
+	width: 300px;
 }
 
 .formInput {
-	width: 530px;
+	width: 100%;
 	font-size: 18px;
 	padding: 5px 10px;
+	margin-bottom: 30px;
+}
+.formInput::placeholder {
+	color: rgb(192, 192, 192);
+}
+
+.formLabel {
+	font-size: 28px;
+	font-weight: 300;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.formSwitchContainer {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 100px;
+	width: 100%;
+}
+
+.switchText {
+	font-size: 18px;
+}
+
+.infoBox {
+	width: 525px;
+	padding: 10px;
+}
+
+.infoText {
+	text-align: center;
+	font-size: 18px;
 }

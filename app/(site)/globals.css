@@ -34,7 +34,8 @@ body {
 .body_dark p,
 .body_dark h1,
 .body_dark h2,
-.body_dark h3 {
+.body_dark h3,
+.body_dark label {
 	color: var(--default-color);
 }
 
