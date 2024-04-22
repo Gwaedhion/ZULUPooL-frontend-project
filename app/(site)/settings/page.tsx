@@ -10,7 +10,7 @@ import { Button } from '@/components/Button/Button';
 import axios from 'axios';
 import { API } from '@/app/api';
 import {
-	IUserGetSettingsCoins,
+	IUserGetCredentialsResponse,
 	IUserGetSettingsResponse,
 } from './settings.props';
 import en from '../../i18n/en.json';
@@ -49,7 +49,6 @@ export default function Info() {
 
 	useEffect(() => {
 		getUserSettings();
-		console.log(apiData);
 	}, []);
 
 	const [userLanguage, setUserLanguage] = useState(
@@ -74,21 +73,16 @@ export default function Info() {
 
 	console.log(arr);
 
-	const [paymentAddressPlaceholder, setPaymentAddressPlaceholder] =
-		useState('');
+	const [paymentAddressValue, setPaymentAddressValue] = useState('');
 
 	const getPaymentAddressPlaceholder = () => {
 		arr?.forEach((element) => {
 			if (element.name == currentSecondaryCoin.title) {
-				setPaymentAddressPlaceholder(element.address);
+				setPaymentAddressValue(element.address);
 			}
 		});
-		console.log(paymentAddressPlaceholder);
+		console.log(paymentAddressValue);
 	};
-
-	useEffect(() => {
-		getPaymentAddressPlaceholder();
-	});
 
 	useEffect(() => {
 		getPaymentAddressPlaceholder();
@@ -108,13 +102,32 @@ export default function Info() {
 
 	useEffect(() => {
 		getPayoutThresholdPlaceholder();
-	});
-
-	useEffect(() => {
-		getPayoutThresholdPlaceholder();
 	}, [currentSecondaryCoin]);
 
 	const coin = userLang.current.settings['payment-settings-form'].coins;
+
+	const checkPaymentAddress = () => {
+		if (paymentAddressValue !== null) {
+			return paymentAddressValue;
+		} else return 'none';
+	};
+
+	const [credentialsApi, setCredentialsApi] =
+		useState<IUserGetCredentialsResponse>();
+
+	const getUserCredentials = () => {
+		axios
+			.post(API.user.userGetCredentials, JSON.stringify(userSessionId))
+			.then((res) => setCredentialsApi(res.data));
+	};
+
+	const date = new Date(
+		credentialsApi?.registrationDate! * 1000
+	).toLocaleDateString(navigator.language, {
+		day: '2-digit',
+		month: '2-digit',
+		year: '2-digit',
+	});
 
 	return (
 		<div className={styles.pageWrapper}>
@@ -127,7 +140,7 @@ export default function Info() {
 						})}
 						onClick={() => setSettingsState('payment-settings')}
 					>
-						<p
+						<span
 							className={cn(styles.settingsTitle, {
 								[styles.settingsTitle_activeBlue]:
 									settingsState == 'payment-settings',
@@ -138,7 +151,7 @@ export default function Info() {
 									'payment-settings-form'
 								].settings.paymentSettings.title
 							}
-						</p>
+						</span>
 						<PaymentsSettingsIcon
 							className={cn(styles.settingsIcon, {
 								[styles.settingsIcon_activeBlue]:
@@ -153,7 +166,10 @@ export default function Info() {
 							[styles.settingsButton_activePurple]:
 								settingsState == 'account-settings',
 						})}
-						onClick={() => setSettingsState('account-settings')}
+						onClick={() => {
+							setSettingsState('account-settings');
+							getUserCredentials();
+						}}
 					>
 						<AccountSettingsIcon
 							className={cn(styles.settingsIcon, {
@@ -161,7 +177,7 @@ export default function Info() {
 									settingsState == 'account-settings',
 							})}
 						/>
-						<p
+						<span
 							className={cn(styles.settingsTitle, {
 								[styles.settingsTitle_activePurple]:
 									settingsState == 'account-settings',
@@ -172,7 +188,7 @@ export default function Info() {
 									'payment-settings-form'
 								].settings.accountSettings.title
 							}
-						</p>
+						</span>
 					</button>
 				</div>
 			</div>
@@ -197,11 +213,6 @@ export default function Info() {
 							type="text"
 							name="address"
 							id="address"
-							value={
-								paymentAddressPlaceholder !== null
-									? paymentAddressPlaceholder
-									: ''
-							}
 							placeholder={
 								currentSecondaryCoin.title == 'BTC'
 									? coin.sha256.BTC.P2PKH
@@ -232,6 +243,13 @@ export default function Info() {
 									: ''
 							}
 						/>
+						<p className={styles.formText}>
+							{`${
+								userLang.current.settings[
+									'payment-settings-form'
+								].settings.paymentSettings.currentAddress
+							}: ${checkPaymentAddress()}`}
+						</p>
 						<label className={styles.formLabel} htmlFor="threshold">
 							{
 								userLang.current.settings[
@@ -245,11 +263,6 @@ export default function Info() {
 							type="text"
 							name="threshold"
 							id="threshold"
-							value={
-								payoutThresholdPlaceholder !== null
-									? `minPay= ${payoutThresholdPlaceholder} ${currentSecondaryCoin.title}`
-									: ''
-							}
 							placeholder={
 								currentSecondaryCoin.title == 'BTC'
 									? 'minPay= 0.001 BTC'
@@ -308,14 +321,191 @@ export default function Info() {
 					</form>
 					<div className={styles.infoBox}>
 						<p className={styles.infoText}>
-							{`An example of supported address formats and minimal
-							allowed payout for ${currentSecondaryCoin.title}:`}
+							{`${userLang.current.settings['payment-settings-form'].settings.paymentSettings.example} ${currentSecondaryCoin.title}:`}
 						</p>
 					</div>
 				</div>
 			)}
+			{settingsState == 'payment-settings' && (
+				<div className={styles.settingsBox}>
+					{currentSecondaryCoin.title == 'BTC' ? (
+						<p className={styles.addressFormat}>
+							P2PKH: 13xDZX65TFmeFgowMJsJvutmSxUttwkE3f,
+							<br />
+							P2SH: 3H28N5WuREZ93CNmhWcRcrnykWrMqkhFyWN,
+							<br />
+							Bech32: bc1uf5tdn87k2uz7r2kl5zrfww362ch3746lq5vse7
+							<br />
+							minPay= 0.001 BTC
+						</p>
+					) : (
+						<></>
+					)}
+					{currentSecondaryCoin.title == 'BCHN' ? (
+						<p className={styles.addressFormat}>
+							P2PKH: 13xDZX65TFmeFgowMJsJvutmSxUttwkE3f,
+							<br />
+							Bech32: qqsxr824tvsq72tv7x43xa346zn7f78pkqssr5lavh
+							<br />
+							minPay= 0.005 BCHN
+						</p>
+					) : (
+						<></>
+					)}
+					{currentSecondaryCoin.title == 'BSV' ? (
+						<p className={styles.addressFormat}>
+							P2PKH: 13xDZX65TFmeFgowMJsJvutmSxUttwkE3f minPay=
+							0.005 BSV
+						</p>
+					) : (
+						<></>
+					)}
+					{currentSecondaryCoin.title == 'DGB.sha256' ? (
+						<p className={styles.addressFormat}>
+							P2PKH: DSMvc9BbM8vtrjPSpMaXmQVXWZsgA92Wxc,
+							<br />
+							P2SH: SRsJzf5XL19LDff1paPzRB6p6Va6NmW8Pc,
+							<br />
+							Bech32: dgb1q5d0dypakqz326jhuqzsspdkys0dxs5ztckrtl9
+							<br />
+							minPay= 10 DGB.sha256
+						</p>
+					) : (
+						<></>
+					)}
+					{currentSecondaryCoin.title == 'HTR' ? (
+						<p className={styles.addressFormat}>
+							P2PKH: HTjxTEAUSwZf34nK4YuicfDPocT7JsQwJi minPay= 8
+							HTR
+						</p>
+					) : (
+						<></>
+					)}
+					{currentSecondaryCoin.title == 'XEC' ? (
+						<p className={styles.addressFormat}>
+							P2PKH:13xDZX65TFmeFgowMJsJvutmSxUttwkE3f,
+							<br />
+							Bech32:qqsxr824tvsq72tv7x43xa346zn7f78pkqfahly82q
+							<br />
+							minPay= 10000 XEC
+						</p>
+					) : (
+						<></>
+					)}
+					{currentSecondaryCoin.title == 'DGB.odo' ? (
+						<p className={styles.addressFormat}>
+							P2PKH:DSMvc9BbM8vtrjPSpMaXmQVXWZsgA92Wxc,
+							<br />
+							P2SH:SRsJzf5XL19LDff1paPzRB6p6Va6NmW8Pc,
+							<br />
+							Bech32:dgb1q5d0dypakqz326jhuqzsspdkys0dxs5ztckrtl9
+							<br />
+							minPay= 10 DGB.odo
+						</p>
+					) : (
+						<></>
+					)}
+					{currentSecondaryCoin.title == 'DGB.qubit' ? (
+						<p className={styles.addressFormat}>
+							P2PKH:DSMvc9BbM8vtrjPSpMaXmQVXWZsgA92Wxc,
+							<br />
+							P2SH:SRsJzf5XL19LDff1paPzRB6p6Va6NmW8Pc,
+							<br />
+							Bech32:dgb1q5d0dypakqz326jhuqzsspdkys0dxs5ztckrtl9
+							<br />
+							minPay= 10 DGB.qubit
+						</p>
+					) : (
+						<></>
+					)}
+					{currentSecondaryCoin.title == 'LTC' ? (
+						<p className={styles.addressFormat}>
+							P2PKH:LcgdQuT7TPbo5X2qSfTi4Kbvov3p1uzeAK,
+							<br />
+							P2SH:MKYXKMckKUgYX1tTPuEjLtGQ6jiBXhpf39 minPay= 0.01
+							LTC
+						</p>
+					) : (
+						<></>
+					)}
+					{currentSecondaryCoin.title == 'DGB.scrypt' ? (
+						<p className={styles.addressFormat}>
+							P2PKH:DSMvc9BbM8vtrjPSpMaXmQVXWZsgA92Wxc,
+							<br />
+							P2SH:SRsJzf5XL19LDff1paPzRB6p6Va6NmW8Pc,
+							<br />
+							Bech32:dgb1q5d0dypakqz326jhuqzsspdkys0dxs5ztckrtl9
+							<br />
+							minPay= 10 DGB.scrypt
+						</p>
+					) : (
+						<></>
+					)}
+					{currentSecondaryCoin.title == 'DOGE' ? (
+						<p className={styles.addressFormat}>
+							P2PKH:DMHMEs1KBhFPuVtwUTCGTtJQSuCmyETxVH minPay= 100
+							DOGE
+						</p>
+					) : (
+						<></>
+					)}
+					{currentSecondaryCoin.title == 'DGB.skein' ? (
+						<p className={styles.addressFormat}>
+							P2PKH:DSMvc9BbM8vtrjPSpMaXmQVXWZsgA92Wxc,
+							<br />
+							P2SH:SRsJzf5XL19LDff1paPzRB6p6Va6NmW8Pc,
+							<br />
+							Bech32:dgb1q5d0dypakqz326jhuqzsspdkys0dxs5ztckrtl9
+							<br />
+							minPay= 10 DGB.skein
+						</p>
+					) : (
+						<></>
+					)}
+					{currentSecondaryCoin.title == 'XPM' ? (
+						<p className={styles.addressFormat}>
+							P2PKH:AZ6QziuQaHDZkwWr125jSJcs23s7PjgzRb minPay= 10
+							XPM
+						</p>
+					) : (
+						<></>
+					)}
+				</div>
+			)}
 			{settingsState == 'account-settings' && (
-				<div className={styles.settingsBox}></div>
+				<form className={cn(styles.settingsBox, styles.form)}>
+					<div className={styles.accSettingsContainer}>
+						<span className={styles.accSettingsTitle}>E-mail</span>
+						<p>{credentialsApi?.email}</p>
+					</div>
+					<div className={styles.accSettingsContainer}>
+						<span className={styles.accSettingsTitle}>
+							Two factor authentication
+							<Switch />
+						</span>
+					</div>
+					<div className={styles.accSettingsContainer}>
+						<span className={styles.accSettingsTitle}>
+							Registration Date
+						</span>
+						<p>{date}</p>
+					</div>
+					<div className={styles.accSettingsContainer}>
+						<span className={styles.accSettingsTitle}>
+							Public name
+						</span>
+						<input
+							type="text"
+							className={styles.formInput}
+							name="public-name"
+							id="public-name"
+							placeholder={credentialsApi?.name}
+						/>
+					</div>
+					<div className={styles.accSettingsContainer}>
+						<Button appearence="middle">Save public name</Button>
+					</div>
+				</form>
 			)}
 		</div>
 	);

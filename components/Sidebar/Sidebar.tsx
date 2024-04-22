@@ -93,6 +93,10 @@ export const Sidebar = ({ userTheme, userLanguage }: any): JSX.Element => {
 	};
 
 	useEffect(() => {
+		getUserName();
+	}, []);
+
+	useEffect(() => {
 		if (global.sessionStorage.length == 0 && pathname !== '/') {
 			router.push('/auth');
 		}
@@ -201,8 +205,8 @@ export const Sidebar = ({ userTheme, userLanguage }: any): JSX.Element => {
 				</button>
 			</div>
 
-			{expanded && !userName ? (
-				<span className={styles.userName}>Username</span>
+			{expanded ? (
+				<span className={styles.userName}>{userName}</span>
 			) : (
 				<span className={styles.userName}>
 					<UserIcon className={styles.userIcon} />

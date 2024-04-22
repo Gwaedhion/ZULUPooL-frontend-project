@@ -57,7 +57,8 @@
 					"automaticPayoutThreshold": "Automatic payout threshold",
 					"autoPayoutEnabled": "Auto payout enabled",
 					"savePaymentSettings": "Save Payment Settings",
-					"example": "An example of supported address formats and minimal allowed payout for"
+					"example": "An example of supported address formats and minimal allowed payout for",
+					"currentAddress": "Current address"
 				},
 				"accountSettings": {
 					"title": "Account Settings",

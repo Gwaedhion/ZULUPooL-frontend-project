@@ -12,6 +12,8 @@
 .settingsContainer {
 	display: flex;
 	gap: 100px;
+	padding: 40px 22.5px;
+	border: 1px solid var(--primary-blue);
 }
 
 .settingsTitle {
@@ -53,7 +55,8 @@
 	transform: scale(1.1);
 }
 
-.settingsButton_active {
+.settingsButton_activeBlue,
+.settingsButton_activePurple {
 	transform: scale(1.1);
 }
 
@@ -95,10 +98,9 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	margin-top: 50px;
 	padding: 60px 40px;
-	border: 1px solid var(--primary-blue);
 	width: 525px;
+	border: 1px solid var(--primary-blue);
 }
 
 .formButton {
@@ -109,11 +111,19 @@
 .formInput {
 	width: 100%;
 	font-size: 18px;
-	padding: 5px 10px;
-	margin-bottom: 30px;
+	padding: 10px 10px;
+	margin-bottom: 10px;
 }
 .formInput::placeholder {
 	color: rgb(192, 192, 192);
+}
+
+.formInput:last-of-type {
+	margin-bottom: 30px;
+}
+
+.formText {
+	margin-bottom: 30px;
 }
 
 .formLabel {
@@ -143,4 +153,17 @@
 .infoText {
 	text-align: center;
 	font-size: 18px;
+}
+
+.accSettingsContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	margin-bottom: 20px;
+	width: 100%;
+}
+
+.accSettingsTitle {
+	font-weight: 600;
 }
